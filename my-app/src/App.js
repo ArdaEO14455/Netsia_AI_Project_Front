@@ -27,11 +27,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <div className="container">
+      <div className="container-fluid">
 
 {/* Chat History Column */}
 
-  <div class="column align-items-start">
+  <div class="chat-history">
     <div class="col">
       Chat History
     </div>
@@ -45,17 +45,8 @@ function App() {
 
       <nav class="navbar">
   <div class="container-fluid">
-    <a class="nav-item" href="#">Netsia</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Login</a>
-        </li>
-      </ul>
-    </div>
+    <a class="nav-link" href="#">Netsia</a>
+    <a class="nav-link" href="#">Login</a>
   </div>
 </nav>
 
@@ -68,15 +59,16 @@ function App() {
             </div>
           ))}
         </div>
-      </div>
+      
       <div className="input-container ">
           <textarea
-            class="form-control"
+            class="form-control bg-transparent text-light"
             rows="3"
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
           <button className="btn btn-primary" onClick={handleSend}>Send</button>
+        </div>
         </div>
     </div>
     </div>

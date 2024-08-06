@@ -1,12 +1,20 @@
-.container {
+/* General */
+.container-fluid {
   margin-top: 20px;
-  max-width: 600px;
   background-color: #212121;
   display: flex;
   flex-direction: row;
-  width: 100%
-  
 }
+
+.col {
+  width: 20%
+}
+
+.nav-chat-container {
+  width: 100%
+}
+
+/* Chat Container */
 
 .chat-container {
   display: flex;
@@ -15,8 +23,18 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
-  background-color: #5f899a;
+  width: 80%;
 }
+
+
+/* Nav-Bar */
+
+.navbar-brand {
+  background-color: #5f899a;
+  padding: 1rem;
+}
+
+/* Dialogue / Messages */
 
 .messages {
   flex: 1;
@@ -31,14 +49,14 @@
 }
 
 .message.user {
-  background-color: #1e1f20;
   text-align: right;
 }
 
 .message.chatgpt {
-  background-color: #1e1f20;
   text-align: left;
 }
+
+/* Text Input */
 
 .input-container {
   display: flex;
@@ -51,20 +69,9 @@
   margin-right: 10px;
 }
 
-.col {
-  width: 20%
-}
 
-.navbar-brand {
-  background-color: #5f899a;
-  padding: 1rem;
-}
 
-.nav-chat-container {
-  width: 100%
-}
 
-.form-control {
-  background-color: #070707;
-}
+
+
 
