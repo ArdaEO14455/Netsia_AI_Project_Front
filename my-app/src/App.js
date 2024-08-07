@@ -26,13 +26,13 @@ function App() {
   
   return (
     <div className="App">
-      <header className="App-header">
+      <header class="App-header">
       <div className="container-fluid">
 
 {/* Chat History Column */}
 
-  <div class="chat-history">
-    <div class="col">
+  <div class="side-bar">
+    <div class="header">
       Chat History
     </div>
   </div>
@@ -43,15 +43,13 @@ function App() {
 
 {/* Nav Bar */}
 
-      <nav class="navbar">
-  <div class="container-fluid">
+<nav class="navbar px-2">
     <a class="nav-link" href="#">Netsia</a>
     <a class="nav-link" href="#">Login</a>
-  </div>
 </nav>
 
       {/* Chat Container */}
-      <div className="chat-container">
+      <div className="chat-container mx-auto border-0">
         <div className="messages">
           {messages.map((msg, index) => (
             <div class ="dialogue" key={index} className={`message ${msg.user.toLowerCase()}`}>
@@ -60,15 +58,16 @@ function App() {
           ))}
         </div>
       
-      <div className="input-container ">
+      
+        </div>
+        <div className="input-container ">
           <textarea
             class="form-control bg-transparent text-light"
             rows="3"
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
-          <button className="btn btn-primary" onClick={handleSend}>Send</button>
-        </div>
+          <button className="btn btn-secondary" onClick={handleSend}>Send</button>
         </div>
     </div>
     </div>

@@ -1,9 +1,11 @@
 /* General */
 .container-fluid {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   background-color: #212121;
   display: flex;
   flex-direction: row;
+  min-height: 100vh;
+  padding-left: 0 !important
 }
 
 .col {
@@ -11,7 +13,27 @@
 }
 
 .nav-chat-container {
-  width: 100%
+  width: 100%;
+  align-items: center;
+}
+
+
+/* Nav-Bar */
+
+.navbar-brand {
+  background-color: #5f899a;
+  padding: 1rem;
+}
+
+.navbar {
+  height: 10%
+}
+
+/* Side Bar */
+
+.side-bar {
+  width:20%;
+  background-color: #171717
 }
 
 /* Chat Container */
@@ -27,12 +49,6 @@
 }
 
 
-/* Nav-Bar */
-
-.navbar-brand {
-  background-color: #5f899a;
-  padding: 1rem;
-}
 
 /* Dialogue / Messages */
 
