@@ -49,17 +49,19 @@ function App() {
 </nav>
 
       {/* Chat Container */}
-      <div className="chat-container mx-auto border-0">
-        <div className="messages">
-          {messages.map((msg, index) => (
-            <div class ="dialogue" key={index} className={`message ${msg.user.toLowerCase()}`}>
-              <strong class="dialogue">{msg.user}: </strong >{msg.text}
-            </div>
-          ))}
-        </div>
-      
-      
-        </div>
+      <div className="chat-container mx-1 border-0">
+  <div className="messages mx-1">
+    {messages.map((msg, index) => (
+      <div key={index} className={`message ${msg.user.toLowerCase()} px-5`}>
+        <strong>{msg.user}: </strong>
+        {msg.text}
+      </div>
+    ))}
+  </div>
+</div>
+
+
+      {/* User */}
         <div className="input-container mx-auto ">
           <textarea
             class="form-control bg-transparent text-light"

@@ -42,10 +42,8 @@
   display: flex;
   flex-direction: column;
   height: 80vh;
-  border: 1px solid #ccc;
-  border-radius: 5px;
   padding: 10px;
-  width: 80%;
+  width: 100%;
 }
 
 
@@ -53,7 +51,9 @@
 /* Dialogue / Messages */
 
 .messages {
-  flex: 1;
+  /* flex: 1; */
+  display:flex;
+  flex-direction: column;
   overflow-y: auto;
   margin-bottom: 10px;
 }
@@ -66,6 +66,10 @@
 
 .message.user {
   text-align: right;
+  background-color: #2f2f2f;
+  border-radius:32px;
+  width: 50%;
+  align-self: flex-end
 }
 
 .message.chatgpt {
