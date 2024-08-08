@@ -36,7 +36,25 @@ function App() {
 
 <div class="d-flex flex-row overflow-y-scroll" id="side-bar-container">
   <div class="d-flex flex-column" id="button-and-sidebar-container">
-    <div id="button-container">
+
+{/* Side Bar Content */}
+    <div class="collapse collapse-horizontal show" id="side-bar">
+      <div>
+        Chat History
+      </div> 
+    </div>
+  </div>
+</div>  
+  
+
+{/* Nav + User Prompt */}
+
+<div class="nav-chat-container pb-5">
+
+{/* Nav Bar */}
+
+<nav class="navbar px-2">
+<div id="button-container">
       <button 
         class="btn active collapse-toggle border-0 text-start"
         id="side-bar-button"
@@ -51,24 +69,6 @@ function App() {
           </svg>
       </button>
     </div>
-
-{/* Side Bar Content */}
-    <div class="collapse collapse-horizontal show" id="side-bar">
-      <div>
-        Chat History
-      </div> 
-    </div>
-  </div>
-</div>  
-  
-
-{/* Nav + User Prompt */}
-
-<div class="nav-chat-container">
-
-{/* Nav Bar */}
-
-<nav class="navbar px-2">
     <a class="nav-link fw-bold" href="#">NETSIA</a>
     <a class="nav-link" href="#">Login</a>
 </nav>
@@ -88,7 +88,7 @@ function App() {
 
 
       {/* User Input */}
-        <div class="input-container mx-auto ">
+        <div class="input-container mx-auto">
           <textarea
             class="form-control bg-transparent text-light"
             rows="3"

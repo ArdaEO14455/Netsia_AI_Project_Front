@@ -30,18 +30,8 @@
 
 /* Side Bar */
 
-#side-bar-container {
-  width: 20%;
-}
-
-#button-and-sidebar-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
 #button-container {
-  width: 100%;
+  width: fit-content;
   height: fit-content;
 }
 
@@ -118,7 +108,7 @@
 /* Media Queries */
 @media (max-width: 768px) {
   #side-bar-container {
-    width: 50%;
+    width: 50% !important;
     z-index: 5;
   }
 
