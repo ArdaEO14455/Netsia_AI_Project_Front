@@ -33,29 +33,30 @@ function App() {
     <div className="container-fluid">
 
 {/* Chat History Column */}
-    
-        
-    
 
-      <div class="side-bar">
+<div className="d-flex flex-row overflow-y-scroll" id="side-bar-container">
+  <div className="d-flex flex-column" id="button-and-sidebar-container">
+    <div id="button-container">
       <button 
-        class="btn active collapse-toggle" 
+        className="btn active collapse-toggle border-0"
+        id="side-bar-button"
         type="button" 
         data-bs-toggle="collapse" 
         data-bs-target="#collapseWidthExample" 
         aria-expanded="true" 
         aria-controls="collapseWidthExample">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-list" viewBox="0 0 16 16">
+              <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
           </svg>
-        </button>
-    <div class="collapse collapse-horizontal show" id="collapseWidthExample">
-      Chat History
-    </div> 
-    
+      </button>
+    </div>
+    <div className="side-bar collapse collapse-horizontal show" id="collapseWidthExample">
+      <div>
+        Chat History
+      </div> 
+    </div>
   </div>
-
-
+</div>
 
 
 {/* <div>
