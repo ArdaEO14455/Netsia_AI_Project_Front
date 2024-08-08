@@ -79,7 +79,7 @@ function App() {
   <div class="messages mx-1">
     {messages.map((msg, index) => (
       <div key={index} class={`message ${msg.user.toLowerCase()} px-5 fs-5`}>
-        <strong>{msg.user}: </strong>
+        {/* <strong>{msg.user}</strong> */}
         {msg.text}
       </div>
     ))}
