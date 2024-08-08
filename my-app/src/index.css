@@ -32,9 +32,10 @@
 /* Side Bar */
 
 .side-bar {
-  width:20%;
+  width:fit-content;
   background-color: #171717
 }
+
 
 /* Chat Container */
 

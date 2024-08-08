@@ -1,20 +1,23 @@
 import './App.css';
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './App.css';
+
 
 function App() {
 
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  
 
   const handleSend = () => {
     if (input.trim() !== '') {
-      // Add user message
+      // User message
       setMessages([...messages, { user: 'User', text: input }]);
       setInput('');
 
-      // Add mock response
+      // Mock response
       setMessages(prevMessages => [
         ...prevMessages,
         // { user: 'User', text: input },
@@ -25,17 +28,47 @@ function App() {
 
   
   return (
-    <div className="App">
-      <header class="App-header">
-      <div className="container-fluid">
+<div className="App">
+  <header class="App-header">
+    <div className="container-fluid">
 
 {/* Chat History Column */}
+    
+        
+    
 
-  <div class="side-bar">
-    <div class="header">
+      <div class="side-bar">
+      <button 
+        class="btn active collapse-toggle" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#collapseWidthExample" 
+        aria-expanded="true" 
+        aria-controls="collapseWidthExample">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+          </svg>
+        </button>
+    <div class="collapse collapse-horizontal show" id="collapseWidthExample">
       Chat History
+    </div> 
+    
+  </div>
+
+
+
+
+{/* <div>
+  <div class="collapse collapse-horizontal" id="collapseWidthExample">
+    <div class="card card-body">
+      This is some placeholder content for a horizontal collapse. It's hidden by default and shown when triggered.
     </div>
   </div>
+
+
+</div> */}
+  
+  
 
 {/* Nav + User Prompt */}
 
@@ -44,15 +77,16 @@ function App() {
 {/* Nav Bar */}
 
 <nav class="navbar px-2">
-    <a class="nav-link" href="#">Netsia</a>
+    <a class="nav-link" href="#">NETSIA</a>
     <a class="nav-link" href="#">Login</a>
 </nav>
 
+
       {/* Chat Container */}
-      <div className="chat-container mx-1 border-0">
-  <div className="messages mx-1">
+      <div class="chat-container mx-1 border-0">
+  <div class="messages mx-1">
     {messages.map((msg, index) => (
-      <div key={index} className={`message ${msg.user.toLowerCase()} px-5`}>
+      <div key={index} className={`message ${msg.user.toLowerCase()} px-5 fs-5`}>
         <strong>{msg.user}: </strong>
         {msg.text}
       </div>
