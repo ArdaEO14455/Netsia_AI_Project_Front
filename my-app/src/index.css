@@ -13,7 +13,6 @@
 
 .nav-chat-container {
   width: 100%;
-  align-items: center;
 }
 
 
@@ -29,6 +28,11 @@
 }
 
 /* Side Bar */
+
+
+#button-and-side-bar-container {
+  width:50%
+}
 
 #button-container {
   width: fit-content;

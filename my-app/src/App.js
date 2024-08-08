@@ -41,7 +41,7 @@ function App() {
     <div class="collapse collapse-horizontal show" id="side-bar">
       <div>
         Chat History
-      </div> 
+      </div>
     </div>
   </div>
 </div>  
