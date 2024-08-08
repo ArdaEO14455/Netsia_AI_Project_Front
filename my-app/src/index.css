@@ -50,8 +50,10 @@
   width: 100%;
 }
 
-.side-bar {
+#side-bar {
+  height:100%;
   width: 100%;
+  background-color: #171717;
 }
 
 
