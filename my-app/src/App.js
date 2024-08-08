@@ -21,7 +21,7 @@ function App() {
       setMessages(prevMessages => [
         ...prevMessages,
         // { user: 'User', text: input },
-        { user: 'ChatGPT', text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }
+        { user: '', text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }
       ]);
     }
   };
@@ -44,7 +44,8 @@ function App() {
         data-bs-toggle="collapse" 
         data-bs-target="#side-bar" 
         aria-expanded="true" 
-        aria-controls="side-bar">
+        aria-controls="side-bar"
+      >
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
               <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
           </svg>
@@ -68,7 +69,7 @@ function App() {
 {/* Nav Bar */}
 
 <nav class="navbar px-2">
-    <a class="nav-link" href="#">NETSIA</a>
+    <a class="nav-link fw-bold" href="#">NETSIA</a>
     <a class="nav-link" href="#">Login</a>
 </nav>
 
@@ -86,7 +87,7 @@ function App() {
 </div>
 
 
-      {/* User */}
+      {/* User Input */}
         <div class="input-container mx-auto ">
           <textarea
             class="form-control bg-transparent text-light"

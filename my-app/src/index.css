@@ -86,15 +86,17 @@
 }
 
 .message.user {
-  text-align: right;
+  text-align: left;
   background-color: #2f2f2f;
   border-radius:32px;
-  width: 50%;
+  width: fit-content;
+  max-width:50%;
   align-self: flex-end
 }
 
 .message.chatgpt {
   text-align: left;
+  width: 70%
 }
 
 /* Text Input */
@@ -111,7 +113,19 @@
   margin-right: 10px;
 }
 
+/* Media Queries */
 
+/* Media Queries */
+@media (max-width: 768px) {
+  #side-bar-container {
+    width: 50%;
+    z-index: 5;
+  }
+
+  .nav-chat-container {
+    width: 100%;
+  }
+}
 
 
 
