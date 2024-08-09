@@ -34,7 +34,7 @@ function App() {
 
 {/* Side Bar */}
 
-<div class="d-flex flex-row overflow-y-scroll collapse-horizontal show d-lg-block d-md-block" id="side-bar-container">
+<div class="d-flex flex-row overflow-y-scroll collapse-horizontal show d-none d-lg-block d-md-block" id="side-bar-container">
 {/* Side Bar Content */}
     <div class="collapse-horizontal show" id="side-bar">
       <div>
@@ -75,7 +75,7 @@ function App() {
 {/* Mobile Side-Bar Button */}
 <button 
 class="btn active border-0 d-none-block d-sm-block d-lg-none" 
-id="button-container" 
+// id="button-container" 
 type="button" 
 data-bs-toggle="offcanvas" 
 data-bs-target="#side-bar-mobile" 
