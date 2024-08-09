@@ -1,6 +1,13 @@
-Once you've cloned the repository, change directory to the parent of 'my-app' and ensure node and nodeenv is installed:
+Once you've cloned the repository, change directory to the parent of 'my-app' and ensure node and npm are installed:
+
+node -v
+npm -v
+
+it is recommended for
 
 pip install nodeenv
+
+or
 
 then activate the virtual environment:
 

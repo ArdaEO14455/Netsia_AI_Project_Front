@@ -7,9 +7,6 @@
   padding-left: 0 !important
 }
 
-/* .col {
-  width: 20%
-} */
 
 .nav-chat-container {
   width: 100%;
@@ -30,9 +27,16 @@
 /* Side Bar */
 
 
-#button-and-side-bar-container {
-  width:50%
+#side-bar-container{
+  min-height:100%;
+  width: fit-content;
+  background-color: #171717;
 }
+
+/* #button-and-side-bar-container {
+  width:50%;
+  height:100%
+} */
 
 #button-container {
   width: fit-content;
@@ -46,8 +50,14 @@
 
 #side-bar {
   height:100%;
-  width: 100%;
+  /* width: 100%; */
+  
+}
+
+#side-bar-mobile {
   background-color: #171717;
+  width: 80%;
+
 }
 
 
@@ -111,14 +121,16 @@
 
 /* Media Queries */
 @media (max-width: 768px) {
+  
+  .container-fluid {
+    z-index: 1;
+  }
+  
   #side-bar-container {
-    width: 50% !important;
-    z-index: 5;
+    z-index: 2;
   }
 
-  .nav-chat-container {
-    width: 100%;
-  }
+  
 }
 
 
