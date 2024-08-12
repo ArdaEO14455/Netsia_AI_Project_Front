@@ -32,9 +32,9 @@ function App() {
   <header class="App-header">
     <div class="container-fluid">
 
-{/* Side Bar */}
+{/* Side Bar Desktop / Laptop */}
 
-<div class="d-flex flex-row overflow-y-scroll collapse-horizontal show d-none d-lg-block d-md-block" id="side-bar-container">
+<div class="d-flex flex-row overflow-y-scroll collapse-horizontal show d-none" id="side-bar-container">
 {/* Side Bar Content */}
     <div class="collapse-horizontal show" id="side-bar">
       <div>
@@ -45,10 +45,12 @@ function App() {
   
 
 
-<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="side-bar-mobile" aria-labelledby="offcanvasWithBothOptionsLabel">
+{/* Side Bar Mobile */}
+
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="side-bar-mobile" aria-labelledby="offcanvasWithBothOptionsLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title text-light" id="offcanvasWithBothOptionsLabel">Chat History</h5>
-    {/* <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button> */}
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body text-light">
     <p>Try scrolling the rest of the page to see this option in action.</p>
@@ -74,7 +76,7 @@ function App() {
   
 {/* Mobile Side-Bar Button */}
 <button 
-class="btn active border-0 d-none-block d-sm-block d-lg-none" 
+class="btn active border-0" 
 // id="button-container" 
 type="button" 
 data-bs-toggle="offcanvas" 
@@ -87,7 +89,7 @@ aria-controls="side-bar-mobile">
 
 {/* Desktop/Laptop Side-Bar Button */}
 <button 
-  class="btn active collapse-toggle border-0 d-none d-lg-block d-md-block"
+  class="btn active collapse-toggle border-0 d-none"
   id="side-bar-button"
   type="button" 
   data-bs-toggle="collapse" 
