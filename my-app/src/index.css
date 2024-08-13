@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: row;
   min-height: 100vh;
+  max-height: 100vh;
   padding-left: 0 !important
 }
 
@@ -56,7 +57,7 @@
 
 #side-bar-mobile {
   background-color: #171717;
-  width: 80%;
+  width: 30%;
 
 }
 
@@ -95,7 +96,7 @@
   border-radius:32px;
   width: fit-content;
   max-width:50%;
-  align-self: flex-end
+  align-self: flex-end;
 }
 
 .message.chatgpt {
@@ -122,15 +123,11 @@
 /* Media Queries */
 @media (max-width: 768px) {
   
-  .container-fluid {
-    z-index: 1;
-  }
-  
-  #side-bar-container {
-    z-index: 2;
-  }
+#side-bar-mobile{
+ width:70%;
+}
 
-  
+
 }
 
 
