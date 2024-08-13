@@ -8,9 +8,11 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
 
+  const apiKey = process.env.REACT_APP_API_KEY
+
   // Fetch conversation history from the back-end
   useEffect(() => {
-    fetch('http://localhost:8000/conversation-history') // Update the URL as needed
+    fetch(`${apiKey}/conversation-history`) // Update the URL as needed
       .then(response => response.json())
       .then(data => setMessages(data))
       .catch(error => console.error('Error fetching conversation:', error));
