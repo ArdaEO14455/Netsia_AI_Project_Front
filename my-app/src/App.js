@@ -33,31 +33,65 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <div className="container-fluid">
+    <div class="App">
+  <header class="App-header">
+    <div class="container-fluid">
+  
 
-          {/* Nav + User Prompt */}
-          <div className="nav-chat-container">
-            {/* Nav Bar */}
-            <nav className="navbar px-2">
-              <div id="button-container d-none d-lg-block d-md-block">
-                {/* Mobile Side-Bar Button */}
-                <button
-                  className="btn active border-0"
-                  type="button"
-                  data-bs-toggle="offcanvas"
-                  data-bs-target="#side-bar-mobile"
-                  aria-controls="side-bar-mobile">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-list" viewBox="0 0 16 16">
-                    <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-                  </svg>
-                </button>
-              </div>
 
-              <a className="nav-link fw-bold" href="#">NETSIA</a>
-              <a className="nav-link" href="#">Login</a>
-            </nav>
+{/* Side Bar Mobile */}
+
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="side-bar-mobile" aria-labelledby="offcanvasWithBothOptionsLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title text-light" id="offcanvasWithBothOptionsLabel">Chat History</h5>
+    <button type="button" class="btn-close bg-secondary" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body text-light">
+    <p>Try scrolling the rest of the page to see this option in action.</p>
+  </div>
+</div>
+
+
+
+
+
+  
+
+{/* Nav + User Prompt */}
+
+<div class="nav-chat-container ">
+
+{/* Nav Bar */}
+
+<nav class="navbar px-2">
+
+
+<div id="button-container d-none d-lg-block d-md-block">
+  
+{/* Mobile Side-Bar Button */}
+  <button 
+  class="btn active border-0" 
+  // id="button-container" 
+  type="button" 
+  data-bs-toggle="offcanvas" 
+  data-bs-target="#side-bar-mobile" 
+  aria-controls="side-bar-mobile">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+      <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+    </svg>
+  </button>
+
+
+
+</div>
+
+
+
+
+
+    <a class="nav-link fw-bold" href="#">NETSIA</a>
+    <a class="nav-link" href="#">Login</a>
+</nav>
 
             {/* Chat Container */}
             <div className="chat-container mx-1 border-0">
