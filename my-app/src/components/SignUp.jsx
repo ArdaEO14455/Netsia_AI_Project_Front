@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Routes, Link,} from 'react-router-dom';
 
-function SignUp() {
+const SignUp = ({ addUser }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignUp = (e) => {
+  const submit = (e) => {
     e.preventDefault();
     // Handle sign-up logic here
     console.log({ username, email, password });
+    const newUser = {
+      username,
+      email,
+      password
+    }
+    addUser(newUser)
   };
-
-  console.log('Here')
 
   return (
       <header className="App-header">
@@ -24,7 +27,7 @@ function SignUp() {
           <div className="card shadow">
             <div className="card-body">
               <h2 className="card-title text-center">Create an Account</h2>
-              <form onSubmit={handleSignUp}>
+              <form onSubmit={submit}>
                 <div className="mb-3">
                   <label htmlFor="username" className="form-label">Create Username</label>
                   <input
