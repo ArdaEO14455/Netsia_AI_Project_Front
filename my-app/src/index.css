@@ -61,6 +61,14 @@
 
 }
 
+#login-side-bar {
+  background-color: #171717;
+  width: 30%;
+
+}
+
+
+
 
 /* Chat Container */
 
@@ -75,6 +83,11 @@
 
 
 /* Dialogue / Messages */
+
+.conversations {
+  text-align: left;
+  font-size: smaller;
+}
 
 .messages {
   /* flex: 1; */
