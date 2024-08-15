@@ -16,7 +16,6 @@ function SignUp() {
   console.log('Here')
 
   return (
-    <div className="App">
       <header className="App-header">
         <div className="container-fluid">
     <div className="container mt-5">
@@ -68,7 +67,6 @@ function SignUp() {
     </div>
     </div>
     </header>
-    </div>
   );
 }
 
