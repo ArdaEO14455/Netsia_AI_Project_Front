@@ -1,6 +1,7 @@
 import React from 'react';
 
 const SideBar = ({ conversations, handleConversationSelect }) => {
+  console.log(conversations)
   return (
     <div className="offcanvas offcanvas-start" 
       data-bs-scroll="true" 
@@ -14,15 +15,22 @@ const SideBar = ({ conversations, handleConversationSelect }) => {
       </div>
       <div className="offcanvas-body text-light">
         <ul>
-          {Object.keys(conversations).map(key => (
-            <ul key={key} className="conversations" onClick={() => handleConversationSelect(key)}>
-              {conversations[key].name}
-            </ul>
+          {conversations.map((conversation) => (
+            <li
+              key={conversation._id}
+              className="conversations"
+              onClick={() => handleConversationSelect(conversation._id)}
+            >
+              {conversation.subject}
+            </li>
           ))}
         </ul>
       </div>
     </div>
   );
 };
+
+
+
 
 export default SideBar;

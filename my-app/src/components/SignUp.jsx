@@ -29,7 +29,7 @@ const SignUp = ({ addUser }) => {
               <h2 className="card-title text-center">Create an Account</h2>
               <form onSubmit={submit}>
                 <div className="mb-3">
-                  <label htmlFor="username" className="form-label">Create Username</label>
+                  <label htmlFor="username" className="form-label">Username</label>
                   <input
                     type="text"
                     className="form-control"
@@ -51,7 +51,7 @@ const SignUp = ({ addUser }) => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="password" className="form-label">Create Password</label>
+                  <label htmlFor="password" className="form-label">Password</label>
                   <input
                     type="password"
                     className="form-control"
@@ -61,7 +61,7 @@ const SignUp = ({ addUser }) => {
                     required
                   />
                 </div>
-                <button type="submit" className="btn btn-primary w-100">Sign Up</button>
+                <button type="submit" className="btn btn-primary w-100" onSubmit={submit}>Sign Up</button>
               </form>
             </div>
           </div>

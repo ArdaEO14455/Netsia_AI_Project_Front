@@ -21,6 +21,7 @@ const App = () => {
         })
         const responseBody = await response.json()
         if (response.ok) {
+          console.log('user created successfully')
           navigate('/')
       } else { 
           console.error("Error:", response.statusText)
@@ -35,8 +36,8 @@ const App = () => {
   return (
     <>
         <Routes>
-        <Route path="/signup" element={<SignUp />}/>
-        <Route path="/" element={<MainPage addUser={addUser} />}/>
+        <Route path="/signup" element={<SignUp addUser={addUser} />}/>
+        <Route path="/" element={<MainPage/>}/>
         
       </Routes>
     </>  

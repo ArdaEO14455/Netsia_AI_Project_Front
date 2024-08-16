@@ -8,12 +8,15 @@ import { useState, useEffect } from 'react';
 const MainPage = () => {
 const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  const [conversations, setConversations] = useState({});
+  const [conversations, setConversations] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState([]);
   const apiKey = process.env.REACT_APP_API_KEY;
 
   useEffect(() => {
-    fetch(`${apiKey}/allConversations`)
+    // fetch(`${apiKey}/conversations/:id`, {
+    fetch(`${apiKey}/conversation/66bea5d4b257f0beea286433`, {
+        method: 'GET',
+    })
       .then(response => response.json())
       .then(data => setConversations(data))
       .catch(error => console.error('Error fetching conversations:', error));
@@ -35,6 +38,7 @@ const [messages, setMessages] = useState([]);
   const handleConversationSelect = (conversationKey) => {
     setSelectedConversation(conversations[conversationKey]?.messages || []);
   };
+
 
   return (
     <div className="App">
