@@ -14,6 +14,7 @@ const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     // fetch(`${apiKey}/conversations/:id`, {
+    //below API call uses a hard-coded user ID from a test user
     fetch(`${apiKey}/conversation/66bea5d4b257f0beea286433`, {
         method: 'GET',
     })
@@ -35,9 +36,16 @@ const [messages, setMessages] = useState([]);
     }
   };
   
-  const handleConversationSelect = (conversationKey) => {
-    setSelectedConversation(conversations[conversationKey]?.messages || []);
+  const handleConversationSelect = (_id) => {
+    fetch(`${apiKey}/message/${_id}`, {
+        method: 'GET',
+    })
+    .then(response => response.json())
+    .then(data => setMessages(data))
+    .catch(error => console.error('Error fetching conversations:', error));
+    console.log(messages)
   };
+  
 
 
   return (
@@ -47,7 +55,7 @@ const [messages, setMessages] = useState([]);
         <div className="nav-chat-container ">
           <Navbar />
           <SideBar conversations={conversations} handleConversationSelect={handleConversationSelect} />
-          <Chatbox messages={selectedConversation} input={input} setInput={setInput} handleSend={handleSend} />
+          <Chatbox messages={messages} input={input} setInput={setInput} handleSend={handleSend} />
           <LoginForm />
           </div>
         </div>

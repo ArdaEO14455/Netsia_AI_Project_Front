@@ -1,7 +1,6 @@
 import React from 'react';
 
 const SideBar = ({ conversations, handleConversationSelect }) => {
-  console.log(conversations)
   return (
     <div className="offcanvas offcanvas-start" 
       data-bs-scroll="true" 
