@@ -8,20 +8,9 @@ import { useState, useEffect } from 'react';
 const MainPage = () => {
 const [messages, setMessages] = useState([]);
 const [input, setInput] = useState('');
-const [conversations, setConversations] = useState([]);
 const apiKey = process.env.REACT_APP_API_KEY;
 
-  useEffect(() => {
-    // Retrieve
-    // fetch(`${apiKey}/conversations/:id`, {
-    //below API call uses a hard-coded user ID from a test user
-    fetch(`${apiKey}/conversation/66bea5d4b257f0beea286433`, {
-        method: 'GET',
-    })
-      .then(response => response.json())
-      .then(data => setConversations(data))
-      .catch(error => console.error('Error fetching conversations:', error));
-  }, [apiKey]);
+  
 
   const handleSend = () => {
     if (input.trim() !== '') {
@@ -53,7 +42,7 @@ const apiKey = process.env.REACT_APP_API_KEY;
         <div className="container-fluid">
         <div className="nav-chat-container ">
           <Navbar />
-          <SideBar conversations={conversations} handleConversationSelect={handleConversationSelect} />
+          <SideBar handleConversationSelect={handleConversationSelect} />
           <Chatbox messages={messages} input={input} setInput={setInput} handleSend={handleSend} />
           <LoginForm />
           </div>
