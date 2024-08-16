@@ -1,13 +1,13 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 
 const Chatbox = ({ messages, input, setInput, handleSend }) => {
-  console.log(messages)
   return (
     <div className="nav-chat-container ">
       <div className="chat-container mx-1 border-0">
         <div className="messages mx-1">
-          {messages.map((msg, index) => (
-            <div key={index} className={`message ${msg.sender.toLowerCase()} px-5 fs-5`}>
+          {messages.map((msg) => (
+            <div className={`message ${msg.sender.toLowerCase()} px-5 fs-5`}>
               {msg.content}
             </div>
           ))}

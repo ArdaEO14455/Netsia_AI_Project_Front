@@ -7,12 +7,12 @@ import { useState, useEffect } from 'react';
 
 const MainPage = () => {
 const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const [conversations, setConversations] = useState([]);
-  const [selectedConversation, setSelectedConversation] = useState([]);
-  const apiKey = process.env.REACT_APP_API_KEY;
+const [input, setInput] = useState('');
+const [conversations, setConversations] = useState([]);
+const apiKey = process.env.REACT_APP_API_KEY;
 
   useEffect(() => {
+    // Retrieve
     // fetch(`${apiKey}/conversations/:id`, {
     //below API call uses a hard-coded user ID from a test user
     fetch(`${apiKey}/conversation/66bea5d4b257f0beea286433`, {
@@ -25,7 +25,7 @@ const [messages, setMessages] = useState([]);
 
   const handleSend = () => {
     if (input.trim() !== '') {
-      setMessages([...messages, { user: 'User', text: input }]);
+      setMessages([...messages, { user: 'user', text: input }]);
       setInput('');
 
       // Mock response
@@ -43,7 +43,6 @@ const [messages, setMessages] = useState([]);
     .then(response => response.json())
     .then(data => setMessages(data))
     .catch(error => console.error('Error fetching conversations:', error));
-    console.log(messages)
   };
   
 
