@@ -2,6 +2,26 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 
 const Chatbox = ({ messages, input, setInput, handleSend }) => {
+
+  const apiKey = process.env.REACT_APP_API_KEY;
+
+  // const sendMessage = async (newMessage) => {
+  //   try {
+  //       const response = await fetch(`${apiKey}/conversation/:id`, {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body:JSON.stringify(newMessage)
+  //       })
+  //       const responseBody = await response.json()
+  //       if (response.ok) {
+  //         handleSend()
+  //       }
+  //   }
+  // }
+
+
   return (
     <div className="nav-chat-container ">
       <div className="chat-container mx-1 border-0">

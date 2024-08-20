@@ -5,12 +5,13 @@ const SideBar = ({handleConversationSelect }) => {
 
 const [conversations, setConversations] = useState([]);
 const apiKey = process.env.REACT_APP_API_KEY;
+const testUserId = '66bea5d4b257f0beea286433'
 
 useEffect(() => {
   // Retrieve conversations
   // fetch(`${apiKey}/conversations/:id`, {
   //below API call uses a hard-coded user ID from a test user
-  fetch(`${apiKey}/conversation/66bea5d4b257f0beea286433`, {
+  fetch(`${apiKey}/conversation/${testUserId}`, {
       method: 'GET',
   })
     .then(response => response.json())

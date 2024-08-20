@@ -3,7 +3,7 @@ import Navbar from './Navbar';
 import Chatbox from './Chatbox';
 import SideBar from './SideBar';
 import LoginForm from './LoginForm';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const MainPage = () => {
 const [messages, setMessages] = useState([]);
