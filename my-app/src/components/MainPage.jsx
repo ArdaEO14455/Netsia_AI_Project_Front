@@ -1,31 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Chatbox from './Chatbox';
 import SideBar from './SideBar';
 import LoginForm from './LoginForm';
-import { useState } from 'react';
 
 const MainPage = () => {
 const [messages, setMessages] = useState([]);
 const [input, setInput] = useState('');
+const [selectedConversationId, setSelectedConversationId] = useState('')
 const apiKey = process.env.REACT_APP_API_KEY;
 
-  
 
-  const handleSend = () => {
-    if (input.trim() !== '') {
-      setMessages([...messages, { user: 'user', text: input }]);
-      setInput('');
-
-      // Mock response
-      setMessages(prevMessages => [
-        ...prevMessages,
-        { user: '', text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
-      ]);
-    }
-  };
-  
-  const handleConversationSelect = (_id) => {
+const handleConversationSelect = (_id) => {
+    setSelectedConversationId(_id)
     fetch(`${apiKey}/message/${_id}`, {
         method: 'GET',
     })
@@ -33,6 +20,23 @@ const apiKey = process.env.REACT_APP_API_KEY;
     .then(data => setMessages(data))
     .catch(error => console.error('Error fetching conversations:', error));
   };
+
+  const sendMessage = async (newMessage) => {
+    try {
+        const response = await fetch(`${apiKey}/message/${selectedConversationId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body:JSON.stringify(newMessage)
+        })
+        const responseBody = await response.json()
+        handleConversationSelect(responseBody.conversationId)
+    }
+    catch(error){
+      console.error("Error:", error.message)
+    }
+  }
   
 
 
@@ -43,7 +47,7 @@ const apiKey = process.env.REACT_APP_API_KEY;
         <div className="nav-chat-container ">
           <Navbar />
           <SideBar handleConversationSelect={handleConversationSelect} />
-          <Chatbox messages={messages} input={input} setInput={setInput} handleSend={handleSend} />
+          <Chatbox messages={messages} setMessages={setMessages} input={input} setInput={setInput} sendMessage={sendMessage}/>
           <LoginForm />
           </div>
         </div>

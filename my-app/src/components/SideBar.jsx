@@ -17,7 +17,7 @@ useEffect(() => {
     .then(response => response.json())
     .then(data => setConversations(data))
     .catch(error => console.error('Error fetching conversations:', error));
-}, [apiKey]);
+}, []);
 
 
   return (
