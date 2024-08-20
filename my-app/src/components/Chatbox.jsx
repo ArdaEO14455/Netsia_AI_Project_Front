@@ -11,8 +11,7 @@ const Chatbox = ({ messages, input, setInput, sendMessage }) => {
     }
     sendMessage(newMessage)
   }
-
-
+  
   return (
     <div className="nav-chat-container ">
       <div className="chat-container mx-1 border-0">
