@@ -47,16 +47,16 @@ useEffect(() => {
     };
   
     //New Conversation
-    const newConversation = async (id) => {
-      // fetch(`${apiKey}/user/${id}`, {
-      //Below uses hard-coded testUserId
-      fetch(`${apiKey}/user/${testUserId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body:JSON.stringify(newMessage)
-    })
+    // const newConversation = async (id) => {
+    //   // fetch(`${apiKey}/user/${id}`, {
+    //   //Below uses hard-coded testUserId
+    //   fetch(`${apiKey}/user/${testUserId}`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body:JSON.stringify(newMessage)
+    // })
 
 
 
@@ -126,5 +126,5 @@ useEffect(() => {
     </>  
   );
 }
-}
+
 export default App;
