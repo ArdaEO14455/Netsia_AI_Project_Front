@@ -20,24 +20,33 @@ const App = () => {
   const testUserId = '66bea5d4b257f0beea286433'
 
 
-useEffect(() => {
-  // Retrieve conversations upon render
-  // fetch(`${apiKey}/conversations/:id`, {
-  //below API call uses a hard-coded user ID from a test user
-  fetch(`${apiKey}/conversation/${testUserId}`, {
-      method: 'GET',
-  })
-    .then(response => response.json())
-    .then(data => setConversations(data))
-    .catch(error => console.error('Error fetching conversations:', error));
-}, []);
+  useEffect(() => {
+    // Define an async function
+    
   
+    // Call the async function
+    fetchConversations();
+  }, [testUserId]);
+  
+  const fetchConversations = async () => {
+    try {
+      // Fetch data using await
+      const response = await fetch(`${apiKey}/conversation/${testUserId}`, {
+        method: 'GET',
+      });
+      const data = await response.json();
+      // Update state with the retrieved data
+      setConversations(data);
+    } catch (error) {
+      console.error('Error fetching conversations:', error);
+    }
+  };
   
 
   //Select Conversation
   const handleConversationSelect = async (_id) => {
       setSelectedConversationId(_id)
-      fetch(`${apiKey}/message/${_id}`, {
+      await fetch(`${apiKey}/message/${_id}`, {
           method: 'GET',
           
       })
@@ -46,17 +55,35 @@ useEffect(() => {
       .catch(error => console.error('Error fetching conversations:', error));
     };
   
-    //New Conversation
-    // const newConversation = async (id) => {
-    //   // fetch(`${apiKey}/user/${id}`, {
-    //   //Below uses hard-coded testUserId
-    //   fetch(`${apiKey}/user/${testUserId}`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body:JSON.stringify(newMessage)
-    // })
+    // New Conversation
+    const newConversation = async () => {
+      try {
+        const response = await fetch(`${apiKey}/conversation/${testUserId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            subject: "NewConversationTestSubject",
+            messages: [],
+            timeCreated: "Test Time"
+          })
+        });
+    
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+    
+        const newConversation = await response.json();
+        
+        // Update conversations state correctly
+        setConversations(prevConversations => [...prevConversations, newConversation]);
+    
+      } catch (error) {
+        console.error('Error creating a new conversation:', error);
+      }
+    };
+    
 
 
 
@@ -102,29 +129,40 @@ useEffect(() => {
 
   
 
-  return (
-    <>
-  
-     <div className="App">
-       <header className="App-header">
-         <div className="container-fluid">
-         <div className="nav-chat-container ">
-           <Navbar />
-           <SideBar conversations={conversations} handleConversationSelect={handleConversationSelect} />
-           <Chatbox messages={messages} setMessages={setMessages} input={input} setInput={setInput} sendMessage={sendMessage}/>
-           <LoginForm />
-           </div>
-         </div>
-       </header>
-     </div>
-
-        <Routes>
-        <Route path="/signup" element={<SignUp addUser={addUser} />}/>
-        
-        
-      </Routes>
-    </>  
-  );
-}
+return (
+  <>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <div className="App">
+            <header className="App-header">
+              <div className="container-fluid">
+                <div className="nav-chat-container">
+                  <Navbar />
+                  <SideBar
+                    conversations={conversations}
+                    newConversation={newConversation}
+                    handleConversationSelect={handleConversationSelect}
+                  />
+                  <Chatbox
+                    messages={messages}
+                    setMessages={setMessages}
+                    input={input}
+                    setInput={setInput}
+                    sendMessage={sendMessage}
+                  />
+                  <LoginForm />
+                </div>
+              </div>
+            </header>
+          </div>
+        }
+      />
+      <Route path="/signup" element={<SignUp addUser={addUser} />} />
+    </Routes>
+  </>
+);
+};
 
 export default App;

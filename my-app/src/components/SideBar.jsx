@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SideBar = ({handleConversationSelect, conversations }) => {
+const SideBar = ({handleConversationSelect, conversations, newConversation }) => {
 
 
   return (
@@ -20,13 +20,13 @@ const SideBar = ({handleConversationSelect, conversations }) => {
             <li
               key={conversation._id}
               className="conversations"
-              onClick={() => handleConversationSelect(conversation._id)}
+              onClick={async () => handleConversationSelect(conversation._id)}
             >
               {conversation.subject}
             </li>
           ))}
         </ul>
-        <div>New Conversation</div>
+        <div onClick={newConversation}>New Conversation</div>
       </div>
     </div>
   );
