@@ -15,19 +15,52 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [selectedConversationId, setSelectedConversationId] = useState('')
+  const [conversations, setConversations] = useState([]);
   const apiKey = process.env.REACT_APP_API_KEY;
+  const testUserId = '66bea5d4b257f0beea286433'
+
+
+useEffect(() => {
+  // Retrieve conversations upon render
+  // fetch(`${apiKey}/conversations/:id`, {
+  //below API call uses a hard-coded user ID from a test user
+  fetch(`${apiKey}/conversation/${testUserId}`, {
+      method: 'GET',
+  })
+    .then(response => response.json())
+    .then(data => setConversations(data))
+    .catch(error => console.error('Error fetching conversations:', error));
+}, []);
   
   
+
+  //Select Conversation
   const handleConversationSelect = async (_id) => {
       setSelectedConversationId(_id)
       fetch(`${apiKey}/message/${_id}`, {
           method: 'GET',
+          
       })
       .then(response => response.json())
       .then(data => setMessages(data))
       .catch(error => console.error('Error fetching conversations:', error));
     };
   
+    //New Conversation
+    const newConversation = async (id) => {
+      // fetch(`${apiKey}/user/${id}`, {
+      //Below uses hard-coded testUserId
+      fetch(`${apiKey}/user/${testUserId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(newMessage)
+    })
+
+
+
+    //Send Message
     const sendMessage = async (newMessage) => {
       try {
           const response = await fetch(`${apiKey}/message/${selectedConversationId}`, {
@@ -45,6 +78,7 @@ const App = () => {
       }
     }
 
+    //Add User
   const addUser = async (newUser) => {
     try {
         const response = await fetch(`${process.env.REACT_APP_API_KEY}/user`, {
@@ -76,7 +110,7 @@ const App = () => {
          <div className="container-fluid">
          <div className="nav-chat-container ">
            <Navbar />
-           <SideBar handleConversationSelect={handleConversationSelect} />
+           <SideBar conversations={conversations} handleConversationSelect={handleConversationSelect} />
            <Chatbox messages={messages} setMessages={setMessages} input={input} setInput={setInput} sendMessage={sendMessage}/>
            <LoginForm />
            </div>
@@ -92,5 +126,5 @@ const App = () => {
     </>  
   );
 }
-
+}
 export default App;
