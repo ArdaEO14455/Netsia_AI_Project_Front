@@ -84,21 +84,54 @@
 
 /* Dialogue / Messages */
 
-.conversations {
-  text-align: left;
-  font-size: 20px;
+#conversations-container {
+  padding-left: 0;
+}
+
+
+.conversation-item {
+  position: relative;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+  list-style-type: none;
+}
+
+.conversation-content {
+  font-size:smaller;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Adds the ellipses (...) when text overflows */
-  transition: background-color 0.3s ease; /* Add a smooth transition */
+  text-overflow: ellipsis;
 }
+
+.conversation-item:hover {
+  background-color: #212121; /* Background color on hover */
+}
+
+.dropdown-container {
+    position: absolute;
+  right: 10px; /* Adjust this value for alignment */
+  opacity: 0;
+  pointer-events: none; /* Prevents interaction when hidden */
+  transition: opacity 0.2s ease;
+}
+
+.conversation-item:hover .dropdown-container {
+  opacity: 1;
+  pointer-events: auto;
+  background-color: #212121;
+   /* Allows interaction when visible */
+}
+
+
+
 
 
 
 /* Apply hover effect */
-.conversations:hover {
-  background-color: #212121; /* Change background color to white on hover */
-}
+
 
 .messages {
   /* flex: 1; */

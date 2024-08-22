@@ -145,16 +145,12 @@ const App = () => {
         const response = await fetch(`${apiKey}/conversation/${id}`, {
           method: 'DELETE',
         })
-        if (userConfirmed) {
           // removing the deleted conversation from the state
           setConversations(prevConversations => prevConversations.filter(emp => emp._id !== id))
           // displaying a message that conversation was deleted with the toast library 
           // navigating to the conversations page after the deletion
           setMessages([])
-          fetchConversations()
-        } else {
-          console.error("Error:", response.statusText)
-        }       
+          fetchConversations()     
       } catch (error) {
         console.error("Error:", error.message)
       }
@@ -166,6 +162,7 @@ const App = () => {
 
 
 //Message Functions
+
     //Send Message
     const sendMessage = async (newMessage) => {
       try {
@@ -198,7 +195,7 @@ return (
               <div className="container-fluid">
                 <div className="nav-chat-container">
                   <Navbar />
-                  <SideBar conversations={conversations} newConversation={newConversation} handleConversationSelect={handleConversationSelect}/>
+                  <SideBar conversations={conversations} newConversation={newConversation} handleConversationSelect={handleConversationSelect} handleDelete={handleDelete}/>
                   <Chatbox
                     messages={messages}
                     setMessages={setMessages}
