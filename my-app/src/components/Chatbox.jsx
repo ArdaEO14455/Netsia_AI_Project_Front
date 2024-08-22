@@ -15,7 +15,7 @@ const Chatbox = ({ messages, input, setInput, sendMessage }) => {
   return (
     <div className="nav-chat-container ">
       <div className="chat-container mx-1 border-0">
-        <div className="messages mx-1">
+        <div className="messages mx-1 ">
           {messages.map((msg) => (
             <div key={msg._id} className={`message ${msg.sender.toLowerCase()} px-5 fs-5`}>
               {msg.content}

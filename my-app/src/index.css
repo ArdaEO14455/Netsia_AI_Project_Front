@@ -86,7 +86,18 @@
 
 .conversations {
   text-align: left;
-  font-size: smaller;
+  font-size: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds the ellipses (...) when text overflows */
+  transition: background-color 0.3s ease; /* Add a smooth transition */
+}
+
+
+
+/* Apply hover effect */
+.conversations:hover {
+  background-color: #212121; /* Change background color to white on hover */
 }
 
 .messages {
