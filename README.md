@@ -9,11 +9,13 @@ Ensure that you have the following software installed:
 
     Node.js (version 16.x or later)
     npm (version 7.x or later) or yarn (version 1.x or later)
+    Python 3.x (for virtual environment setup)
 
 Once you've cloned the repository, change directory to the parent of 'my-app'. Ensure that you have the following software installed:
 
     Node.js (version 16.x or later)
     npm (version 7.x or later) or yarn (version 1.x or later)
+    Python 3.x (for virtual environment setup)
 
 
 it is recommended to set up a virtual environment with nodeenv using pip to install:
@@ -68,3 +70,4 @@ start the development server:
     npm start
 
 This will start a development server at http://localhost:3000 by default
+
