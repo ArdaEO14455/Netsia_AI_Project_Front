@@ -97,7 +97,7 @@
 }
 
 .conversation-content {
-  font-size:smaller;
+  font-size:large;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -122,7 +122,10 @@
   opacity: 1;
   pointer-events: auto;
   background-color: #212121;
-   /* Allows interaction when visible */
+}
+
+.dropdown-menu {
+  width:fit-content;
 }
 
 

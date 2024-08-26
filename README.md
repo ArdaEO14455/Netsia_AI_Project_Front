@@ -1,31 +1,52 @@
-Once you've cloned the repository, change directory to the parent of 'my-app' and ensure node and npm are installed:
+## Netsia AI Project Front End
 
-node -v
-npm -v
+This AI application is designed to work as a development tool for company developers. Sharing many of its components and concepts with chatGPT, it serves as a conversation platform to interact with the AI.
 
-it is recommended for
 
-pip install nodeenv
+### Prerequisites
 
-or
+Ensure that you have the following software installed:
 
-then activate the virtual environment:
+    Node.js (version 16.x or later)
+    npm (version 7.x or later) or yarn (version 1.x or later)
 
-source env/bin/activate
+Once you've cloned the repository, change directory to the parent of 'my-app'. Ensure that you have the following software installed:
 
-change directory to 'my-app' and use npm to install the neccessary packages:
+    Node.js (version 16.x or later)
+    npm (version 7.x or later) or yarn (version 1.x or later)
 
-React-router-dom: Routing
-npm install react-router-dom
 
-Bootstrap & Popper.js: CSS Library
-npm install bootstrap
-npm install @popperjs/core
+it is recommended to set up a virtual environment with nodeenv using pip to install:
 
-Axios: Login Authentication
-npm install axios 
 
-if you then use 'npm list' in the terminal, you should have the following:
+    pip install nodeenv
+
+then activate the virtual environment in your terminal:
+ - **On Windows:**
+
+        ```bash
+        nodeenv venv
+        .\venv\Scripts\activate
+        ```
+
+    - **On macOS/Linux:**
+
+        ```bash
+        nodeenv venv
+        source venv/bin/activate
+        ```
+
+Ensure that you are in the my-app directory, and install dependencies within the virtual environment:
+
+    npm install
+
+Use check that depenencies are installed in the terminal: 
+
+    npm list
+
+
+
+you should have the following:
 
 ├── @popperjs/core@2.11.8
 ├── @testing-library/jest-dom@5.17.0
@@ -40,5 +61,10 @@ if you then use 'npm list' in the terminal, you should have the following:
 └── web-vitals@2.1.4
 
 
-Making sure you are in the 'my-app' directory, use 'npm start' to run the app in development mode
+### Running the Application
 
+start the development server:
+
+    npm start
+
+This will start a development server at http://localhost:3000 by default
