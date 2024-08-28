@@ -29,8 +29,11 @@ const App = () => {
   const [selectedConversationId, setSelectedConversationId] = useState('')
   const [conversations, setConversations] = useState([]);
   const apiKey = process.env.REACT_APP_API_KEY;
-  const testUserId = '66bea5d4b257f0beea286433'
   
+  // const userId = localStorage.getItem('userId')
+  const testUserId = '66bea5d4b257f0beea286433'
+  const [userId, setuserId] = useState(localStorage.getItem('userId'))
+  // const [userId, setuserId] = useState(testUserId)
   
   useEffect(() => {
     // Define an async function
@@ -38,7 +41,7 @@ const App = () => {
   
     // Call the async function
     fetchConversations();
-  }, [testUserId]);
+  }, [userId]);
   
 
 
@@ -60,7 +63,6 @@ const App = () => {
           })
           const responseBody = await response.json()
           if (response.ok) {
-            console.log('user created successfully')
             navigate('/')
         } else { 
             console.error("Error:", response.statusText)
@@ -79,16 +81,24 @@ const App = () => {
   const fetchConversations = async () => {
     try {
       // Fetch data using await
-      const response = await fetch(`${apiKey}/conversation/${testUserId}`, {
+      const response = await fetch(`${apiKey}/conversation/${userId}`, {
         method: 'GET',
       });
       const data = await response.json();
-      // Update state with the retrieved data
-      setConversations(data);
+  
+      // Check if data is an array, if not setConversations to an empty array
+      if (Array.isArray(data)) {
+        setConversations(data);
+      } else {
+        setConversations([]);
+      }
     } catch (error) {
       console.error('Error fetching conversations:', error);
+      // If an error occurs, set conversations to an empty array
+      setConversations([]);
     }
   };
+  
   
 
   //Select Conversation
@@ -105,13 +115,15 @@ const App = () => {
     }
     catch (error) {
       console.error('Error creating a new conversation:', error);
+      // if the messages return too late or there is an error, then set the messages to an empty array
+      setMessages([])
     }
     };
   
     // New Conversation
     const newConversation = async () => {
       try {
-        const response = await fetch(`${apiKey}/conversation/${testUserId}`, {
+        const response = await fetch(`${apiKey}/conversation/${userId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -206,7 +218,7 @@ return (
                     sendMessage={sendMessage}
                     handleDelete={handleDelete}
                   />
-                  <LoginForm />
+                  <LoginForm userId={userId} setuserId={setuserId} />
                 </div>
               </div>
             </header>

@@ -9,7 +9,6 @@ const SignUp = ({ addUser }) => {
   const submit = (e) => {
     e.preventDefault();
     // Handle sign-up logic here
-    console.log({ username, email, password });
     const newUser = {
       username,
       email,
