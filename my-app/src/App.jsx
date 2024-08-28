@@ -28,6 +28,7 @@ const App = () => {
   const [input, setInput] = useState('');
   const [selectedConversationId, setSelectedConversationId] = useState('')
   const [conversations, setConversations] = useState([]);
+  const [loggedIn, setloggedIn] = useState(false)
   const apiKey = process.env.REACT_APP_API_KEY;
   
   // const userId = localStorage.getItem('userId')
@@ -38,16 +39,23 @@ const App = () => {
   useEffect(() => {
     // Define an async function
     
-  
+    if (localStorage.getItem('token')) {
+      console.log(localStorage.getItem('token'))
     // Call the async function
-    fetchConversations();
+    fetchConversations()};
   }, [userId]);
   
 
 
 
 // ------------------------------------------------------------------------------------------
+//General Functions
 
+const checkLogIn = async () => {
+  if (userId) {
+    fetchConversations()
+  }
+}
 
   //User Functions
 
@@ -101,24 +109,6 @@ const App = () => {
   
   
 
-  //Select Conversation
-  const handleConversationSelect = async (_id) => {
-    try {
-      setSelectedConversationId(_id)
-      await fetch(`${apiKey}/message/${_id}`, {
-          method: 'GET',
-          
-      })
-      .then(response => response.json())
-      .then(data => setMessages(data))
-      .catch(error => console.error('Error fetching conversations:', error)); 
-    }
-    catch (error) {
-      console.error('Error creating a new conversation:', error);
-      // if the messages return too late or there is an error, then set the messages to an empty array
-      setMessages([])
-    }
-    };
   
     // New Conversation
     const newConversation = async () => {
@@ -196,6 +186,40 @@ const App = () => {
       }
     }
 
+    
+  //Select Conversation & Retrieve Messages
+  const handleConversationSelect = async (_id) => {
+    try {
+      const token = localStorage.getItem('token'); // Retrieve the token from local storage
+      console.log(token)
+      if (!token) {
+        console.error('No token found');
+        return;
+      }
+  
+      setSelectedConversationId(_id);
+  
+      const response = await fetch(`${apiKey}/message/${_id}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch messages');
+      }
+  
+      const data = await response.json();
+      setMessages(data);
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+      // If the messages return too late or there is an error, then set the messages to an empty array
+      setMessages([]);
+      navigate('/')
+    }
+  };
   
 
   

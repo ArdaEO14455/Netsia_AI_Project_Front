@@ -27,7 +27,6 @@ const LoginForm = ({ setuserId }) => {
 
             // Redirect or update UI based on successful login
             setuserId(res.data.userId);
-            navigate('/');
         } catch (err) {
             setSubmitError(err.response?.data?.msg || 'Login failed');
         }

@@ -30,6 +30,7 @@ const Chatbox = ({ messages, input, setInput, sendMessage }) => {
           rows="3"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          // disabled
         />
         <button className="btn btn-secondary" onClick={submit}>
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-arrow-up-circle" viewBox="0 0 16 16">
