@@ -34,14 +34,13 @@ const App = () => {
   // const userId = localStorage.getItem('userId')
   const testUserId = '66bea5d4b257f0beea286433'
   const [userId, setuserId] = useState(localStorage.getItem('userId'))
-  // const [userId, setuserId] = useState(testUserId)
+  const token = localStorage.getItem('token')
   
   useEffect(() => {
     // Define an async function
     
     if (localStorage.getItem('token')) {
-      console.log(localStorage.getItem('token'))
-    // Call the async function
+          // Call the async function
     fetchConversations()};
   }, [userId]);
   
@@ -87,10 +86,15 @@ const checkLogIn = async () => {
   //Conversation Functions
   
   const fetchConversations = async () => {
+    if (userId) {
     try {
       // Fetch data using await
       const response = await fetch(`${apiKey}/conversation/${userId}`, {
         method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
+          'Content-Type': 'application/json',
+        },
       });
       const data = await response.json();
   
@@ -104,7 +108,7 @@ const checkLogIn = async () => {
       console.error('Error fetching conversations:', error);
       // If an error occurs, set conversations to an empty array
       setConversations([]);
-    }
+    }}
   };
   
   
@@ -116,6 +120,7 @@ const checkLogIn = async () => {
         const response = await fetch(`${apiKey}/conversation/${userId}`, {
           method: 'POST',
           headers: {
+            'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
@@ -148,6 +153,10 @@ const checkLogIn = async () => {
       try {
         const response = await fetch(`${apiKey}/conversation/${id}`, {
           method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
+            'Content-Type': 'application/json',
+          }
         })
           // removing the deleted conversation from the state
           setConversations(prevConversations => prevConversations.filter(emp => emp._id !== id))
@@ -173,6 +182,7 @@ const checkLogIn = async () => {
           const response = await fetch(`${apiKey}/message/${selectedConversationId}`, {
             method: 'POST',
             headers: {
+              'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
               'Content-Type': 'application/json',
             },
             body:JSON.stringify(newMessage)
@@ -189,14 +199,7 @@ const checkLogIn = async () => {
     
   //Select Conversation & Retrieve Messages
   const handleConversationSelect = async (_id) => {
-    try {
-      const token = localStorage.getItem('token'); // Retrieve the token from local storage
-      console.log(token)
-      if (!token) {
-        console.error('No token found');
-        return;
-      }
-  
+    try {  
       setSelectedConversationId(_id);
   
       const response = await fetch(`${apiKey}/message/${_id}`, {
