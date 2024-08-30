@@ -48,13 +48,6 @@ const App = () => {
 
 
 // ------------------------------------------------------------------------------------------
-//General Functions
-
-const checkLogIn = async () => {
-  if (userId) {
-    fetchConversations()
-  }
-}
 
   //User Functions
 
@@ -111,9 +104,6 @@ const checkLogIn = async () => {
     }}
   };
   
-  
-
-  
     // New Conversation
     const newConversation = async () => {
       try {
@@ -142,6 +132,32 @@ const checkLogIn = async () => {
         console.error('Error creating a new conversation:', error);
       }
     };
+
+    const renameConversation = async (newName) => {
+      try {
+        const response = await fetch(`${apiKey}/conversation/${selectedConversationId}`, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            subject: newName
+          })
+        });
+    
+        if (!response.ok) {
+          throw new Error(`Failed to rename conversation: ${response.statusText}`);
+        }
+    
+        const data = await response.json();
+        fetchConversations()
+        return data; // Optionally return the updated conversation or any other response
+      } catch (error) {
+        console.error('Error renaming the conversation:', error);
+      }
+    };
+    
 
     // Delete Conversation
 
@@ -236,7 +252,15 @@ return (
               <div className="container-fluid">
                 <div className="nav-chat-container">
                   <Navbar />
-                  <SideBar conversations={conversations} newConversation={newConversation} handleConversationSelect={handleConversationSelect} handleDelete={handleDelete}/>
+                  <SideBar 
+                  conversations={conversations} 
+                  newConversation={newConversation} 
+                  handleConversationSelect={handleConversationSelect} 
+                  handleDelete={handleDelete}
+                  selectedConversationId={selectedConversationId}
+                  setSelectedConversationId={setSelectedConversationId}
+                  renameConversation={renameConversation}
+                  />
                   <Chatbox
                     messages={messages}
                     setMessages={setMessages}
