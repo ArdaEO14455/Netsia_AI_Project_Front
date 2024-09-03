@@ -203,14 +203,34 @@ const App = () => {
             },
             body:JSON.stringify(newMessage)
           })
-          const responseBody = await response.json()
           handleConversationSelect(selectedConversationId)
-          setInput('')
+          const responseBody = await response.json()
+          
       }
       catch(error){
         console.error("Error:", error.message)
       }
     }
+
+    const regenerateResponse = async (lastMessage) => {
+      console.log(lastMessage)
+      try {
+        const response = await fetch(`${apiKey}/message/regen/${selectedConversationId}`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
+            'Content-Type': 'application/json',
+          },
+          body:JSON.stringify(lastMessage)
+        })
+        console.log('here')
+        const responseBody = await response.json()
+        handleConversationSelect(selectedConversationId)
+    }
+    catch(error){
+      console.error("Error:", error.message)
+    }
+  }
 
     
   //Select Conversation & Retrieve Messages
@@ -268,6 +288,7 @@ return (
                     setInput={setInput}
                     sendMessage={sendMessage}
                     handleDelete={handleDelete}
+                    regenerateResponse={regenerateResponse}
                   />
                   <LoginForm userId={userId} setuserId={setuserId} />
                 </div>

@@ -123,7 +123,6 @@ const Sidebar = ({
             </li>
           ))}
         </ul>
-        <div id="new-conversation" >New Conversation</div>
       </div>
     </div>
   );

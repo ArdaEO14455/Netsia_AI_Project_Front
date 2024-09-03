@@ -11,6 +11,10 @@
 
 .nav-chat-container {
   width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  flex: auto;
 }
 
 
@@ -57,7 +61,7 @@
 
 #side-bar-mobile {
   background-color: #171717;
-  width: 30%;
+  width: 20%;
 
 }
 
@@ -75,11 +79,10 @@
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 80vh;
+  max-height: 90vh;
   padding: 10px;
   width: 100%;
 }
-
 
 
 /* Dialogue / Messages */
@@ -177,19 +180,23 @@
 }
 
 
-
-
-
-
-/* Apply hover effect */
-
-
-.messages {
-  /* flex: 1; */
+.chat-interface {
   display:flex;
   flex-direction: column;
-  overflow-y: auto;
   margin-bottom: 10px;
+  
+  max-height: 100%
+}
+
+#messages-container {
+  max-height: 90%;
+  overflow-y: auto;
+  padding-right: 25%;
+  padding-left: 25%;
+  display: flex;
+  flex-direction: column;
+  
+  
 }
 
 .message {
@@ -217,7 +224,9 @@
 .input-container {
   display: flex;
   align-items: center;
-  width: 80%
+  align-self:auto;
+  width: 50%;
+  margin-top: 1rem;
   
 }
 
@@ -225,6 +234,21 @@
   flex: 1;
   margin-right: 10px;
 }
+
+#regenerate-container{
+  width: fit-content;
+  background-color: transparent;
+  border:none;
+}
+
+#regenerate-button {
+  align-self: flex-end;
+  color: white;
+  border: none;
+  width: 100%
+
+}
+
 
 /* Media Queries */
 
