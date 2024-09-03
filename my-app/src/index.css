@@ -260,6 +260,28 @@
 }
 
 
+.message.user {
+  width: 80%;
+  padding: 1rem !important;
+  font-size: smaller !important;
+}
+
+.message.chatgpt {
+  width: 80%;
+  padding: 1rem !important;
+  font-size: smaller !important;
+}
+
+#messages-container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.input-container {
+  width: 100% !important;
+  
+}
+
 }
 
 

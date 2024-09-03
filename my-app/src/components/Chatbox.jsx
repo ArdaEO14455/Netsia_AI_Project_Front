@@ -52,7 +52,8 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse })
                   style={{ display: 'inline-block' }}
                   cursor={true}
                   repeat={0}
-                  onStart={() => setIsAnimating(true)} // Set animation status to true
+                  // onStart={() => setIsAnimating(true)} // Set animation status to true
+                  onStart={() => console.log('start')}
                 />
               ) : (
                 msg.content
