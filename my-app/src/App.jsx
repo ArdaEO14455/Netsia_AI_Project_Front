@@ -37,10 +37,8 @@ const App = () => {
   const token = localStorage.getItem('token')
   
   useEffect(() => {
-    // Define an async function
-    
-    if (localStorage.getItem('token')) {
-          // Call the async function
+    console.log('conversation check')
+    if (token && userId && !conversations.length) {
     fetchConversations()};
   }, [userId]);
   
@@ -290,7 +288,7 @@ return (
                     handleDelete={handleDelete}
                     regenerateResponse={regenerateResponse}
                   />
-                  <LoginForm userId={userId} setuserId={setuserId} />
+                  <LoginForm userId={userId} setuserId={setuserId} token={token}/>
                 </div>
               </div>
             </header>

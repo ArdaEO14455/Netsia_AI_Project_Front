@@ -53,12 +53,14 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse })
                   cursor={true}
                   repeat={0}
                   // onStart={() => setIsAnimating(true)} // Set animation status to true
-                  onStart={() => console.log('start')}
+                  onStart={() => setIsAnimating(true)}
                 />
               ) : (
                 msg.content
-              )}
+              )},
+              
             </div>
+            
           ))}
 
           {/* Regenerate Response Icon */}
@@ -89,6 +91,7 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse })
         </div>
 
         <div className="input-container mx-auto">
+        
           <textarea
             className="form-control bg-transparent text-light"
             rows="3"
