@@ -37,7 +37,6 @@ const App = () => {
   const token = localStorage.getItem('token')
   
   useEffect(() => {
-    console.log('conversation check')
     if (token && userId && !conversations.length) {
     fetchConversations()};
   }, [userId]);

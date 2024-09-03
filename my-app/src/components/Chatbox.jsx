@@ -57,7 +57,7 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse })
                 />
               ) : (
                 msg.content
-              )},
+              )}
               
             </div>
             
