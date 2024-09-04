@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 
-const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse }) => {
+const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, animateResponse, loggedIn }) => {
   const [lastMessage, setLastMessage] = useState('');
   const [lastAiMessageId, setLastAiMessageId] = useState(null); // State to track the last AI message
   const [isAnimating, setIsAnimating] = useState(false); // State to track animation status
 
+  console.log(loggedIn)
   useEffect(() => {
     // Find the last message where the sender is 'user'
     const lastUserMessage = [...messages].reverse().find((msg) => msg.sender.toLowerCase() === 'user');
@@ -17,8 +18,14 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse })
     const lastAiMessage = [...messages].reverse().find((msg) => msg.sender.toLowerCase() === 'chatgpt');
     if (lastAiMessage) {
       setLastAiMessageId(lastAiMessage._id);
+      // Trigger animation if the last message was from AI and animation is enabled
+      if (animateResponse) {
+        setIsAnimating(true);
+      }
+    } else {
+      setIsAnimating(false); // Stop animation if no AI message
     }
-  }, [messages]);
+  }, [messages, animateResponse]);
 
   const submit = (e) => {
     e.preventDefault();
@@ -30,7 +37,6 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse })
     setLastMessage(newMessage);
     sendMessage(newMessage);
     setInput('');
-    console.log(lastMessage);
   };
 
   const handleStopAnimation = () => {
@@ -39,12 +45,11 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse })
 
   return (
     <div className="chat-container mx-1 border-0">
-      <div className="chat-interface">
         <div id="messages-container">
           {/* Messages */}
           {messages.map((msg, index) => (
             <div key={msg._id || index} className={`message ${msg.sender.toLowerCase()} px-5 fs-5`}>
-              {msg.sender.toLowerCase() === 'chatgpt' && msg._id === lastAiMessageId ? (
+              {msg.sender.toLowerCase() === 'chatgpt' && msg._id === lastAiMessageId && isAnimating ? (
                 <TypeAnimation
                   sequence={[msg.content]}
                   wrapper="span"
@@ -52,15 +57,12 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse })
                   style={{ display: 'inline-block' }}
                   cursor={true}
                   repeat={0}
-                  // onStart={() => setIsAnimating(true)} // Set animation status to true
-                  onStart={() => setIsAnimating(true)}
+                  onFinished={() => setIsAnimating(false)} // Stop animation when done
                 />
               ) : (
                 msg.content
               )}
-              
             </div>
-            
           ))}
 
           {/* Regenerate Response Icon */}
@@ -91,16 +93,25 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse })
         </div>
 
         <div className="input-container mx-auto">
-        
-          <textarea
-            className="form-control bg-transparent text-light"
-            rows="3"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
+        {loggedIn == true ? (
+  // Non-disabled Text Area (when logged in)
+  <textarea
+    className="form-control bg-transparent text-light"
+    rows="3"
+    value={input}
+    onChange={(e) => setInput(e.target.value)}
+  />
+) : (
+  // Disabled Text Area (when not logged in)
+  <textarea
+    className="form-control bg-transparent text-light"
+    rows="3"
+    disabled
+  />
+)}
           {isAnimating ? (
             <button className="btn btn-secondary" onClick={handleStopAnimation}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stop-circle-fill" viewBox="0 0 16 16">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-stop-circle-fill" viewBox="0 0 16 16">
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M6.5 5A1.5 1.5 0 0 0 5 6.5v3A1.5 1.5 0 0 0 6.5 11h3A1.5 1.5 0 0 0 11 9.5v-3A1.5 1.5 0 0 0 9.5 5z"/>
               </svg>
             </button>
@@ -122,7 +133,6 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse })
             </button>
           )}
         </div>
-      </div>
     </div>
   );
 };

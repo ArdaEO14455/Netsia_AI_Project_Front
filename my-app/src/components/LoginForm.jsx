@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const LoginForm = ({ setuserId, token }) => {
+const LoginForm = ({ setuserId, loggedIn, setLoggedIn }) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -24,6 +24,7 @@ const LoginForm = ({ setuserId, token }) => {
             const res = await axios.post(`${process.env.REACT_APP_API_KEY}/auth`, { email, password });
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('userId', res.data.userId);
+            setLoggedIn(true)
 
             // Redirect or update UI based on successful login
             setuserId(res.data.userId);

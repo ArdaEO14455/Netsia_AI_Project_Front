@@ -28,7 +28,9 @@ const App = () => {
   const [input, setInput] = useState('');
   const [selectedConversationId, setSelectedConversationId] = useState('')
   const [conversations, setConversations] = useState([]);
-  const [loggedIn, setloggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [animateResponse, setAnimateResponse] = useState(false)
+
   const apiKey = process.env.REACT_APP_API_KEY;
   
   // const userId = localStorage.getItem('userId')
@@ -39,6 +41,8 @@ const App = () => {
   useEffect(() => {
     if (token && userId && !conversations.length) {
     fetchConversations()};
+    setLoggedIn(true)
+    console.log(loggedIn)
   }, [userId]);
   
 
@@ -200,6 +204,7 @@ const App = () => {
             },
             body:JSON.stringify(newMessage)
           })
+          setAnimateResponse(true)
           handleConversationSelect(selectedConversationId)
           const responseBody = await response.json()
           
@@ -210,7 +215,6 @@ const App = () => {
     }
 
     const regenerateResponse = async (lastMessage) => {
-      console.log(lastMessage)
       try {
         const response = await fetch(`${apiKey}/message/regen/${selectedConversationId}`, {
           method: 'POST',
@@ -220,7 +224,6 @@ const App = () => {
           },
           body:JSON.stringify(lastMessage)
         })
-        console.log('here')
         const responseBody = await response.json()
         handleConversationSelect(selectedConversationId)
     }
@@ -268,7 +271,10 @@ return (
             <header className="App-header">
               <div className="container-fluid">
                 <div className="nav-chat-container">
-                  <Navbar />
+                  <Navbar 
+                  loggedIn={loggedIn}
+                  />
+
                   <SideBar 
                   conversations={conversations} 
                   newConversation={newConversation} 
@@ -277,6 +283,7 @@ return (
                   selectedConversationId={selectedConversationId}
                   setSelectedConversationId={setSelectedConversationId}
                   renameConversation={renameConversation}
+                  loggedIn={loggedIn}
                   />
                   <Chatbox
                     messages={messages}
@@ -286,8 +293,10 @@ return (
                     sendMessage={sendMessage}
                     handleDelete={handleDelete}
                     regenerateResponse={regenerateResponse}
+                    animateResponse={animateResponse}
+                    loggedIn={loggedIn}
                   />
-                  <LoginForm userId={userId} setuserId={setuserId} token={token}/>
+                  <LoginForm userId={userId} setuserId={setuserId} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
                 </div>
               </div>
             </header>

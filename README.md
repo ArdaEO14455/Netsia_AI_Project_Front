@@ -59,6 +59,7 @@ you should have the following:
 ├── react-dom@18.3.1
 ├── react-router-dom@6.26.0
 ├── react-scripts@5.0.1
+├── react-type-animation@3.2.0
 ├── react@18.3.1
 └── web-vitals@2.1.4
 
