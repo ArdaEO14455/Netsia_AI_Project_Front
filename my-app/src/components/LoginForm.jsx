@@ -34,6 +34,10 @@ const LoginForm = ({ setuserId, loggedIn, setLoggedIn }) => {
         }
     };
 
+    const logOut = async (e) => {
+        e.preventDefault()
+    }
+
     return (
         <div className="offcanvas offcanvas-start" 
             data-bs-scroll="false" 

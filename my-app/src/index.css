@@ -26,7 +26,18 @@
 }
 
 .navbar {
-  height: 10%
+  height: 10%;
+  display: flex;
+  flex: row;
+  align-items:center;
+}
+
+.nav-link {
+  align-self: center;
+}
+
+#dropdownMenuButton {
+  color: white;
 }
 
 /* Side Bar */
@@ -146,12 +157,13 @@
 }
 
 .dropdown-menu {
-  min-width: fit-content !important;
+  max-width: fit-content !important;
   height: fit-content !important;
   padding-top: 0.5rem !important;
   padding-bottom: 0.5rem !important;
   inset: 0px !important;
   background-color:#212121 !important;
+  transform: translate(-100px, 50px)
 }
 
 .dropdown-item {
