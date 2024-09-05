@@ -28,6 +28,7 @@ const LoginForm = ({ setuserId, loggedIn, setLoggedIn }) => {
 
             // Redirect or update UI based on successful login
             setuserId(res.data.userId);
+            window.location.reload();
         } catch (err) {
             setSubmitError(err.response?.data?.msg || 'Login failed');
         }
@@ -73,7 +74,7 @@ const LoginForm = ({ setuserId, loggedIn, setLoggedIn }) => {
                     {submitError && (
                         <div className="alert alert-warning alert-dismissible fade show" role="alert">
                             {submitError}
-                            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={() => setSubmitError(null)}>
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>

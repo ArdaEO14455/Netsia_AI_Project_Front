@@ -24,7 +24,6 @@ const Sidebar = ({
     setSelectedConversationId(null); // Reset the state to exit editing mode
     setEditingConversation(false) // Reset the EditingConversation State to un-render the rename input
   };
-  console.log(loggedIn)
 
   return (
     <div className="offcanvas offcanvas-start" 

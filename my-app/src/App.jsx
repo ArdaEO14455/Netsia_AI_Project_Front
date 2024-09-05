@@ -19,7 +19,10 @@ import Chatbox from './components/Chatbox.jsx';
 import SideBar from './components/SideBar.jsx';
 import LoginForm from './components/LoginForm.jsx';
 
-//import
+//Other Imports
+
+import { jwtDecode } from 'jwt-decode';
+
 
 const App = () => {
 
@@ -33,17 +36,39 @@ const App = () => {
 
   const apiKey = process.env.REACT_APP_API_KEY;
   
+  
   // const userId = localStorage.getItem('userId')
   const testUserId = '66bea5d4b257f0beea286433'
   const [userId, setuserId] = useState(localStorage.getItem('userId'))
   const token = localStorage.getItem('token')
-  
+
   useEffect(() => {
-    if (token && userId && !conversations.length) {
-    fetchConversations()};
-    setLoggedIn(true)
-    console.log(loggedIn)
-  }, [userId]);
+
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token); // Decode the token to get the payload
+        const currentTime = Date.now() / 1000; // Get current time in seconds
+
+        if (decodedToken.exp < currentTime) {
+          // Token has expired
+          console.log('Token has expired');
+          localStorage.removeItem('token'); // Remove the expired token
+          setLoggedIn(false); // Ensure loggedIn remains false
+        } else {
+          // Token is still valid
+          fetchConversations()
+          setLoggedIn(true);
+        }
+      } catch (error) {
+        console.error('Error decoding token', error);
+        setLoggedIn(false); // In case of an error (e.g., invalid token), set loggedIn to false
+      }
+    } else {
+      setLoggedIn(false); // No token present
+    }
+  }, []);
+
+
   
 
 
@@ -215,6 +240,7 @@ const App = () => {
     }
 
     const regenerateResponse = async (lastMessage) => {
+      console.log(lastMessage)
       try {
         const response = await fetch(`${apiKey}/message/regen/${selectedConversationId}`, {
           method: 'POST',
@@ -273,6 +299,7 @@ return (
                 <div className="nav-chat-container">
                   <Navbar 
                   loggedIn={loggedIn}
+                  userId={userId}
                   />
 
                   <SideBar 
