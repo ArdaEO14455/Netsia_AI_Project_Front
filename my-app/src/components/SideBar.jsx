@@ -56,7 +56,7 @@ const Sidebar = ({
             >
               <div className="conversation-content" >
                 {/* Conditional Rendering of Input Field for Renaming */}
-                {selectedConversationId === conversation._id && editingConversation == true ? (
+                {selectedConversationId === conversation._id && editingConversation === true ? (
                   <input
                     type="text"
                     value={newName}

@@ -22,6 +22,8 @@ import LoginForm from './components/LoginForm.jsx';
 //Other Imports
 
 import { jwtDecode } from 'jwt-decode';
+import axios from 'axios';
+
 
 
 const App = () => {
@@ -33,14 +35,20 @@ const App = () => {
   const [conversations, setConversations] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false)
   const [animateResponse, setAnimateResponse] = useState(false)
+  const [loading, setLoading] = useState(false)
+
 
   const apiKey = process.env.REACT_APP_API_KEY;
   
   
   // const userId = localStorage.getItem('userId')
-  const testUserId = '66bea5d4b257f0beea286433'
   const [userId, setuserId] = useState(localStorage.getItem('userId'))
   const token = localStorage.getItem('token')
+  const errorMessage = {
+    sender: 'error',
+    content: 'There was an Error, Please Try Again Later',
+    timestamp: 'None'
+  };
 
   useEffect(() => {
 
@@ -98,7 +106,31 @@ const App = () => {
       }
   }
   
+  const logOut = async (e) => {
+    e.preventDefault();
 
+    try {
+        // Optionally call the backend /logout route if needed
+        await axios.post(`${process.env.REACT_APP_API_KEY}/auth/logout`, {}, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+        
+        // Clear token and user data from local storage
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        
+        // Update loggedIn state to false
+        setLoggedIn(false);
+        setuserId(null);
+
+        // Navigate to login page or any other page
+        navigate('/');
+    } catch (err) {
+        console.error('Logout failed:', err);
+    }
+};
 
 
 // ------------------------------------------------------------------------------------------
@@ -221,27 +253,30 @@ const App = () => {
     //Send Message
     const sendMessage = async (newMessage) => {
       try {
-          const response = await fetch(`${apiKey}/message/${selectedConversationId}`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
-              'Content-Type': 'application/json',
-            },
-            body:JSON.stringify(newMessage)
-          })
-          setAnimateResponse(true)
-          handleConversationSelect(selectedConversationId)
-          const responseBody = await response.json()
-          
+        const response = await fetch(`${apiKey}/message/${selectedConversationId}`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newMessage)
+        });
+        setAnimateResponse(true);
+        await handleConversationSelect(selectedConversationId);
+        const responseBody = await response.json();
+        setLoading(false)
+      } catch (error) {
+        
+        console.error("Error:", error.message);
+        setLoading(false)
+        // Append the errorMessage to the existing messages
+        setMessages((prevMessages) => [...prevMessages, errorMessage]);
       }
-      catch(error){
-        console.error("Error:", error.message)
-      }
-    }
+    };
 
     const regenerateResponse = async (lastMessage) => {
-      console.log(lastMessage)
       try {
+        setLoading(true)
         const response = await fetch(`${apiKey}/message/regen/${selectedConversationId}`, {
           method: 'POST',
           headers: {
@@ -250,11 +285,15 @@ const App = () => {
           },
           body:JSON.stringify(lastMessage)
         })
+        setAnimateResponse(true);
         const responseBody = await response.json()
-        handleConversationSelect(selectedConversationId)
+        await handleConversationSelect(selectedConversationId)
+        setLoading(false)
     }
     catch(error){
       console.error("Error:", error.message)
+      setLoading(false)
+      setMessages((prevMessages) => [...prevMessages, errorMessage]);
     }
   }
 
@@ -300,6 +339,7 @@ return (
                   <Navbar 
                   loggedIn={loggedIn}
                   userId={userId}
+                  logOut={logOut}
                   />
 
                   <SideBar 
@@ -322,6 +362,8 @@ return (
                     regenerateResponse={regenerateResponse}
                     animateResponse={animateResponse}
                     loggedIn={loggedIn}
+                    loading={loading}
+                    setLoading={setLoading}
                   />
                   <LoginForm userId={userId} setuserId={setuserId} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
                 </div>

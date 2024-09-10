@@ -215,13 +215,19 @@
   background-color: #2f2f2f;
   border-radius:32px;
   width: fit-content;
-  max-width:50%;
+  max-width:70%;
   align-self: flex-end;
 }
 
 .message.chatgpt {
   text-align: left;
   width: 70%
+}
+
+.message.error {
+  text-align: left;
+  width: 70%;
+  background-color: red;
 }
 
 /* Text Input */
@@ -246,6 +252,7 @@
   border:none;
 }
 
+
 #regenerate-button {
   align-self: flex-end;
   color: white;
@@ -254,6 +261,19 @@
 
 }
 
+.spinner-container {
+  width: fit-content;
+  align-self: flex-start;
+}
+
+.spinner-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 /* Media Queries */
 

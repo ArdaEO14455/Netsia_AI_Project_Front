@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Navbar = ({ loggedIn, userId }) => {
+const Navbar = ({ loggedIn, userId, logOut }) => {
   return (
     <nav className="navbar px-2">
       <div id="button-container" className="d-none d-lg-block d-md-block">
@@ -35,7 +35,7 @@ const Navbar = ({ loggedIn, userId }) => {
           </button>
           <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
             <li>
-              <button className="dropdown-item text-light">Log-Out</button>
+              <button className="dropdown-item text-light" onClick={logOut}>Log-Out</button>
             </li>
           </ul>
         </div>

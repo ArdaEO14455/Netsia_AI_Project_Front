@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { TypeAnimation } from 'react-type-animation';
+import CodeBlock from './CodeBlock';
+import { ImSpinner9 } from "react-icons/im";
 
-const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, animateResponse, loggedIn}) => {
+const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, animateResponse, loggedIn, setMessages, loading, setLoading}) => {
   const [lastMessage, setLastMessage] = useState('');
   const [lastAiMessageId, setLastAiMessageId] = useState(null); // State to track the last AI message
   const [isAnimating, setIsAnimating] = useState(false); // State to track animation status
@@ -9,13 +11,16 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, a
   const token = localStorage.getItem('token')
   const [showAlert, setShowAlert] = useState(false);
 
-
+// function to bring dummy div at the bottom of the messages into view
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  
+
 //Jump to most recent messages
   useEffect(() => {
+    //when messages state reapplies after fetch, call scrollToBottom
     scrollToBottom()
   }, [messages])
 
@@ -27,7 +32,7 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, a
     
     }
 
-    // Update last AI message ID if the last message was from AI
+    // Update last Ai message ID if the last message was from AI
     const lastAiMessage = [...messages].reverse().find((msg) => msg.sender.toLowerCase() === 'chatgpt');
     if (lastAiMessage) {
       setLastAiMessageId(lastAiMessage._id);
@@ -46,12 +51,15 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, a
 
   const submit = (e) => {
     e.preventDefault();
+    setLoading(true)
+    console.log(`loading = ${loading}`)
     const newMessage = {
       sender: 'user',
       content: input,
       timestamp: new Date().toISOString()
     };
     if (newMessage.content) {
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
       setLastMessage(newMessage);
       sendMessage(newMessage);
       setInput('');
@@ -68,61 +76,72 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, a
         <div id="messages-container">
           {/* Messages */}
           {messages.map((msg, index) => (
-            <div key={msg._id || index} className={`message ${msg.sender.toLowerCase()} px-5 fs-5`}>
-              {msg.sender.toLowerCase() === 'chatgpt' && msg._id === lastAiMessageId && isAnimating ? (
-                <TypeAnimation
-                //Sequence determines the order, so by placing setIsAnimating(false) after, after the message is animated, it sets the state and swaps out the stop animation button for the submit button
-                  sequence={[msg.content, () => {setIsAnimating(false)}]}
-                  wrapper="span"
-                  speed={75}
-                  style={{ display: 'inline-block' }}
-                  cursor={true}
-                  repeat={0}
-               // Stop animation when done
-                />
-              ) : (
-                msg.content
-              )}
-              
-      
-            </div>
-            
-          ))}
+  <div key={msg._id || index} className={`message ${msg.sender.toLowerCase()} px-5 fs-5`}>
+    {/* Check if the message is from 'chatgpt', if the animation is needed */}
+    {msg.sender.toLowerCase() === 'chatgpt' && msg._id === lastAiMessageId && isAnimating ? (
+      <TypeAnimation
+        sequence={[msg.content, () => { setIsAnimating(false); }]}
+        wrapper="span"
+        speed={75}
+        style={{ display: 'inline-block' }}
+        cursor={true}
+        repeat={0}
+      />
+    ) : (
+      // Check if the message is code
+      msg.isCode ? (
+        // Use CodeBlock component to display code with language and copy functionality
+        <CodeBlock language={msg.language} code={msg.content} />
+      ) : (
+        // Regular message content
+        msg.content
+      )
+    )}
+  </div>
+))}
           {/* Dummy div to ensure scroll to bottom */}
         <div ref={messagesEndRef} />
-{/* Alert for clicking submit button without logging in */}
-      {showAlert === true && (
-        <div className="alert alert-warning alert-dismissible fade show" role="alert">
-          <strong>You must log in to send messages</strong>
-          <button type="button" className="btn-close" onClick={() => setShowAlert(false)}></button>
-        </div>
-      )}
 
-          {/* Regenerate Response Icon */}
-          {lastMessage && (
-            <button
-              id="regenerate-container"
-              className="rounded-lg text-token-text-secondary hover:bg-token-main-surface-secondary"
-              aria-label="Regenerate Response"
-              onClick={() => regenerateResponse(lastMessage)}
+        {/* Alert for clicking submit button without logging in */}
+        {showAlert === true && (
+          <div className="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>You must log in to send messages</strong>
+            <button type="button" className="btn-close" onClick={() => setShowAlert(false)}></button>
+          </div>
+        )}
+        
+        {/* Spinner */}
+        {loading && (
+          <div class="spinner-container">
+            <ImSpinner9 class="spinner-icon" />
+          </div>
+        )}
+
+        {/* Regenerate Response Icon */}
+        {lastMessage && !loading && (
+          <button
+            id="regenerate-container"
+            className="rounded-lg text-token-text-secondary hover:bg-token-main-surface-secondary"
+            aria-label="Regenerate Response"
+            onClick={() => regenerateResponse(lastMessage)}
+          >
+            <svg
+              id="regenerate-button"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              fill="currentColor"
+              className="btn active bi bi-arrow-repeat"
+              viewBox="0 0 16 16"
             >
-              <svg
-                id="regenerate-button"
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                fill="currentColor"
-                className="btn active bi bi-arrow-repeat"
-                viewBox="0 0 16 16"
-              >
-                <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9" />
-                <path
-                  fillRule="evenodd"
-                  d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"
-                />
-              </svg>
-            </button>
-          )}
+              <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9" />
+              <path
+                fillRule="evenodd"
+                d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"
+              />
+            </svg>
+          </button>
+        )}
         </div>
 
         <div className="input-container mx-auto">
@@ -187,5 +206,6 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, a
     </div>
   );
 };
+
 
 export default Chatbox;
