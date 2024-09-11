@@ -34,31 +34,7 @@ const LoginForm = ({ setuserId, loggedIn, setLoggedIn }) => {
         }
     };
 
-    const logOut = async (e) => {
-        e.preventDefault();
-
-        try {
-            // Optionally call the backend /logout route if needed
-            await axios.post(`${process.env.REACT_APP_API_KEY}/auth/logout`, {}, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
-            });
-            
-            // Clear token and user data from local storage
-            localStorage.removeItem('token');
-            localStorage.removeItem('userId');
-            
-            // Update loggedIn state to false
-            setLoggedIn(false);
-            setuserId(null);
-
-            // Navigate to login page or any other page
-            navigate('/login');
-        } catch (err) {
-            console.error('Logout failed:', err);
-        }
-    };
+    
 
     return (
         <div className="offcanvas offcanvas-start" 

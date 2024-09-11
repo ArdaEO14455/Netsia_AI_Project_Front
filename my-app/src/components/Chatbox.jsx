@@ -52,7 +52,6 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, a
   const submit = (e) => {
     e.preventDefault();
     setLoading(true)
-    console.log(`loading = ${loading}`)
     const newMessage = {
       sender: 'user',
       content: input,

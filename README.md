@@ -1,9 +1,11 @@
-## Netsia AI Project Front End
+# Netsia AI Project Front End
 
 This AI application is designed to work as a development tool for company developers. Sharing many of its components and concepts with chatGPT, it serves as a conversation platform to interact with the AI.
 
 
-### Prerequisites
+## Prerequisites
+
+### Setup
 
 Ensure that you have the following software installed:
 
@@ -38,8 +40,11 @@ then activate the virtual environment in your terminal:
         source venv/bin/activate
         ```
 
-Ensure that you are in the my-app directory, and install dependencies within the virtual environment:
+### Libraries
 
+Ensure that you are in the my-app directory, and install dependencies within the virtual environment:
+    
+    cd my-app
     npm install
 
 Use check that depenencies are installed in the terminal: 
@@ -50,19 +55,34 @@ Use check that depenencies are installed in the terminal:
 
 you should have the following:
 
-├── @popperjs/core@2.11.8
-├── @testing-library/jest-dom@5.17.0
-├── @testing-library/react@13.4.0
-├── @testing-library/user-event@13.5.0
-├── axios@1.7.3
-├── bootstrap@5.3.3
-├── react-dom@18.3.1
-├── react-router-dom@6.26.0
-├── react-scripts@5.0.1
-├── react-type-animation@3.2.0
-├── react@18.3.1
-└── web-vitals@2.1.4
+@popperjs/core@2.11.8  - Bootstrap CSS Dependency
+@testing-library/jest-dom@5.17.0
+@testing-library/react@13.4.0
+@testing-library/user-event@13.5.0
+axios@1.7.5 - 
+bootstrap@5.3.3
+dotenv@16.4.5
+jwt-decode@4.0.0
+react-copy-to-clipboard@5.1.0
+react-dom@18.3.1
+react-icons@5.3.0
+react-router-dom@6.26.0
+react-scripts@5.0.1
+react-syntax-highlighter@15.5.0
+react-type-animation@3.2.0
+react@18.3.1
+web-vitals@2.1.4
 
+
+
+## Other Dependencies
+
+As this application is in development, it requires two other repositories to be utilized:
+
+Node.js API: https://github.com/ArdaEO14455/Netsia_AI_Project_Back
+Python Webserver (AI): https://github.com/atabahr/Flask
+
+Set up the Node.js using the README in that repository. Once set up on a development server, ensure that the server's URI is added to the env in this repository under REACT_APP_API_KEY
 
 ### Running the Application
 

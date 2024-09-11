@@ -22,7 +22,6 @@ import LoginForm from './components/LoginForm.jsx';
 //Other Imports
 
 import { jwtDecode } from 'jwt-decode';
-import axios from 'axios';
 
 
 
@@ -59,7 +58,6 @@ const App = () => {
 
         if (decodedToken.exp < currentTime) {
           // Token has expired
-          console.log('Token has expired');
           localStorage.removeItem('token'); // Remove the expired token
           setLoggedIn(false); // Ensure loggedIn remains false
         } else {
@@ -110,12 +108,6 @@ const App = () => {
     e.preventDefault();
 
     try {
-        // Optionally call the backend /logout route if needed
-        await axios.post(`${process.env.REACT_APP_API_KEY}/auth/logout`, {}, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        });
         
         // Clear token and user data from local storage
         localStorage.removeItem('token');
@@ -125,8 +117,7 @@ const App = () => {
         setLoggedIn(false);
         setuserId(null);
 
-        // Navigate to login page or any other page
-        navigate('/');
+        window.location.reload();
     } catch (err) {
         console.error('Logout failed:', err);
     }
