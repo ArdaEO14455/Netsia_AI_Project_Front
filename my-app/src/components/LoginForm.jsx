@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const LoginForm = ({ setuserId, loggedIn, setLoggedIn }) => {
     const navigate = useNavigate();
@@ -9,30 +8,47 @@ const LoginForm = ({ setuserId, loggedIn, setLoggedIn }) => {
     const [submitError, setSubmitError] = useState(null);
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        // Clear previous errors
-        setSubmitError(null);
+    // Clear previous errors
+    setSubmitError(null);
 
-        // Check if email or password is empty
-        if (!email || !password) {
-            setSubmitError('Please fill in all fields');
-            return;
+    // Check if email or password is empty
+    if (!email || !password) {
+        setSubmitError('Please fill in all fields');
+        return;
+    }
+
+    try {
+        const res = await fetch(`${process.env.REACT_APP_API_KEY}/auth`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+        });
+
+        if (!res.ok) {
+            // Handle response error status
+            const errorData = await res.json();
+            throw new Error(errorData?.msg || 'Login failed');
         }
 
-        try {
-            const res = await axios.post(`${process.env.REACT_APP_API_KEY}/auth`, { email, password });
-            localStorage.setItem('token', res.data.token);
-            localStorage.setItem('userId', res.data.userId);
-            setLoggedIn(true)
+        const data = await res.json();
+        
+        // Store the token and userId in local storage
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.userId);
+        setLoggedIn(true);
 
-            // Redirect or update UI based on successful login
-            setuserId(res.data.userId);
-            window.location.reload();
-        } catch (err) {
-            setSubmitError(err.response?.data?.msg || 'Login failed');
-        }
-    };
+        // Redirect or update UI based on successful login
+        setuserId(data.userId);
+        window.location.reload();
+    } catch (err) {
+        setSubmitError(err.message || 'Login failed');
+    }
+};
+
 
     
 

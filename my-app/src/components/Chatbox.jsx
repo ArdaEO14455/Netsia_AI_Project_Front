@@ -3,7 +3,7 @@ import { TypeAnimation } from 'react-type-animation';
 import CodeBlock from './CodeBlock';
 import { ImSpinner9 } from "react-icons/im";
 
-const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, animateResponse, loggedIn, setMessages, loading, setLoading}) => {
+const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, animateResponse, loggedIn, setMessages, loading, setLoading, selectedConversationId, setSelectedConversationId, newConversation}) => {
   const [lastMessage, setLastMessage] = useState('');
   const [lastAiMessageId, setLastAiMessageId] = useState(null); // State to track the last AI message
   const [isAnimating, setIsAnimating] = useState(false); // State to track animation status
@@ -16,7 +16,6 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, a
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  
 
 //Jump to most recent messages
   useEffect(() => {
@@ -49,20 +48,27 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, a
 
   
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     const newMessage = {
       sender: 'user',
       content: input,
       timestamp: new Date().toISOString()
     };
+    let conversationId = selectedConversationId;
+  
+    if (!selectedConversationId) {
+      conversationId = await newConversation();
+    }
+  
     if (newMessage.content) {
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-      setLastMessage(newMessage);
-      sendMessage(newMessage);
       setInput('');
-  }
+      await sendMessage(conversationId, newMessage);
+      // Remove this manual addition, since sendMessage will update the messages
+      // setMessages((prevMessages) => [...prevMessages, newMessage]);
+      setLastMessage(newMessage);
+    }
   };
 
   const handleStopAnimation = () => {

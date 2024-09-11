@@ -55,11 +55,10 @@ Use check that depenencies are installed in the terminal:
 
 you should have the following:
 
-@popperjs/core@2.11.8  - Bootstrap CSS Dependency
+@popperjs/core@2.11.8 
 @testing-library/jest-dom@5.17.0
 @testing-library/react@13.4.0
 @testing-library/user-event@13.5.0
-axios@1.7.5 - 
 bootstrap@5.3.3
 dotenv@16.4.5
 jwt-decode@4.0.0
@@ -82,7 +81,7 @@ As this application is in development, it requires two other repositories to be 
 Node.js API: https://github.com/ArdaEO14455/Netsia_AI_Project_Back
 Python Webserver (AI): https://github.com/atabahr/Flask
 
-Set up the Node.js using the README in that repository. Once set up on a development server, ensure that the server's URI is added to the env in this repository under REACT_APP_API_KEY
+Set up the Node.js API using the README in that repository. Once set up on a development server, ensure that the server's URI is added to the env in this repository under REACT_APP_API_KEY
 
 ### Running the Application
 
@@ -91,4 +90,8 @@ start the development server:
     npm start
 
 This will start a development server at http://localhost:3000 by default
+
+
+### PlantUML Sequence Diagram:
+![PlantUML Sequence Diagram](/docs/plantuml_sequence_diagram.png)
 

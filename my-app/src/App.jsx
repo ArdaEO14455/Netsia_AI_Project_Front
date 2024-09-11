@@ -159,14 +159,14 @@ const App = () => {
         const response = await fetch(`${apiKey}/conversation/${userId}`, {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            subject: "NewConversationTestSubject",
+            subject: "New Conversation",
             messages: [],
-            timeCreated: "Test Time"
-          })
+            timeCreated: new Date().toISOString(),
+          }),
         });
     
         if (!response.ok) {
@@ -174,11 +174,12 @@ const App = () => {
         }
     
         const newConversation = await response.json();
-        
-        setConversations(prevConversations => [...prevConversations, newConversation]);
-    
+        const id = newConversation._id;
+        await handleConversationSelect(id);
+        setConversations((prevConversations) => [...prevConversations, newConversation]);
+        return id; // Return the new conversation ID
       } catch (error) {
-        console.error('Error creating a new conversation:', error);
+        console.error('Error creating new conversation:', error);
       }
     };
 
@@ -242,26 +243,24 @@ const App = () => {
 //Message Functions
 
     //Send Message
-    const sendMessage = async (newMessage) => {
+    const sendMessage = async (conversationId, newMessage) => {
       try {
-        const response = await fetch(`${apiKey}/message/${selectedConversationId}`, {
+        const response = await fetch(`${apiKey}/message/${conversationId}`, {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(newMessage)
         });
         setAnimateResponse(true);
-        await handleConversationSelect(selectedConversationId);
+        await handleConversationSelect(conversationId); // Refresh the selected conversation
         const responseBody = await response.json();
-        setLoading(false)
+        setLoading(false);
       } catch (error) {
-        
         console.error("Error:", error.message);
-        setLoading(false)
-        // Append the errorMessage to the existing messages
-        setMessages((prevMessages) => [...prevMessages, errorMessage]);
+        setLoading(false);
+        setMessages((prevMessages) => [...prevMessages, { content: 'Error sending message', sender: 'system' }]);
       }
     };
 
@@ -289,12 +288,13 @@ const App = () => {
   }
 
     
-  //Select Conversation & Retrieve Messages
-  const handleConversationSelect = async (_id) => {
-    try {  
-      setSelectedConversationId(_id);
+  //Retrieve Conversation Messages
+  const handleConversationSelect = async (id) => {
+    try {
+      console.log(id)  
+      setSelectedConversationId(id);
   
-      const response = await fetch(`${apiKey}/message/${_id}`, {
+      const response = await fetch(`${apiKey}/message/${id}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
@@ -312,7 +312,6 @@ const App = () => {
       console.error('Error fetching messages:', error);
       // If the messages return too late or there is an error, then set the messages to an empty array
       setMessages([]);
-      navigate('/')
     }
   };
   
@@ -355,6 +354,9 @@ return (
                     loggedIn={loggedIn}
                     loading={loading}
                     setLoading={setLoading}
+                    selectedConversationId={selectedConversationId}
+                    setSelectedConversationId={setSelectedConversationId}
+                    newConversation={newConversation}
                   />
                   <LoginForm userId={userId} setuserId={setuserId} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
                 </div>
