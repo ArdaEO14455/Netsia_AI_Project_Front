@@ -26,8 +26,6 @@ import { jwtDecode } from 'jwt-decode';
 
 
 const App = () => {
-
-  const navigate = useNavigate()
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [selectedConversationId, setSelectedConversationId] = useState('')
@@ -85,6 +83,7 @@ const App = () => {
 
     //Add User
     const addUser = async (newUser) => {
+
       try {
           const response = await fetch(`${process.env.REACT_APP_API_KEY}/user`, {
               method: 'POST',
@@ -94,11 +93,7 @@ const App = () => {
               body: JSON.stringify(newUser),
           })
           const responseBody = await response.json()
-          if (response.ok) {
-            navigate('/')
-        } else { 
-            console.error("Error:", response.statusText)
-          }
+          window.location.reload()
       } catch(error) {
           console.error('Error:', error)
       }
@@ -260,7 +255,7 @@ const App = () => {
       } catch (error) {
         console.error("Error:", error.message);
         setLoading(false);
-        setMessages((prevMessages) => [...prevMessages, { content: 'Error sending message', sender: 'system' }]);
+        setMessages((prevMessages) => [...prevMessages, errorMessage]);
       }
     };
 
@@ -305,8 +300,9 @@ const App = () => {
       if (!response.ok) {
         throw new Error('Failed to fetch messages');
       }
-  
+      
       const data = await response.json();
+      console.log(data)
       setMessages(data);
     } catch (error) {
       console.error('Error fetching messages:', error);

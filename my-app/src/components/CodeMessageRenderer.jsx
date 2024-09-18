@@ -3,7 +3,16 @@ import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-const CodeBlock = ({ language, code }) => {
+// Utility function to extract code language and code content from markdown
+const parseCodeContent = (content) => {
+  // Extract code language and code content from markdown code blocks
+  const match = /```(\w+)?\n([\s\S]*?)```/.exec(content);
+  return match ? { language: match[1] || 'text', code: match[2] } : { language: 'text', code: content };
+};
+
+const CodeMessageRenderer = ({ content }) => {
+  const { language, code } = parseCodeContent(content);
+
   return (
     <div className="code-block-container position-relative p-3 border rounded bg-dark text-light">
       {/* Language Label */}
@@ -29,4 +38,4 @@ const CodeBlock = ({ language, code }) => {
   );
 };
 
-export default CodeBlock;
+export default CodeMessageRenderer;

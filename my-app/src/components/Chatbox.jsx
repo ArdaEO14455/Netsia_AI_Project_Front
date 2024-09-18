@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { TypeAnimation } from 'react-type-animation';
-import CodeBlock from './CodeBlock';
+import CodeMessageRenderer from './CodeMessageRenderer';
 import { ImSpinner9 } from "react-icons/im";
 
-const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, animateResponse, loggedIn, setMessages, loading, setLoading, selectedConversationId, setSelectedConversationId, newConversation}) => {
+const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, animateResponse, loggedIn, loading, setLoading, selectedConversationId, setSelectedConversationId, newConversation}) => {
   const [lastMessage, setLastMessage] = useState('');
   const [lastAiMessageId, setLastAiMessageId] = useState(null); // State to track the last AI message
   const [isAnimating, setIsAnimating] = useState(false); // State to track animation status
@@ -12,9 +12,23 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, a
   const [showAlert, setShowAlert] = useState(false);
 
 // function to bring dummy div at the bottom of the messages into view
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+const scrollToBottom = () => {
+  if (messagesEndRef.current instanceof HTMLElement) {
+    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
+const hasCodeBlock = (content) => /```[\s\S]*?```/.test(content);
+
+const splitMessageContent = (content) => {
+  // Split the content into alternating text and code parts using the regex
+  const parts = content.split(/(```[\s\S]*?```)/g);
+  return parts.map((part) => ({
+    isCode: /```[\s\S]*?```/.test(part),
+    content: part,
+  }));
+};
+
 
 
 //Jump to most recent messages
@@ -79,31 +93,35 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, a
   return (
     <div className="chat-container mx-1 border-0">
         <div id="messages-container">
-          {/* Messages */}
-          {messages.map((msg, index) => (
-  <div key={msg._id || index} className={`message ${msg.sender.toLowerCase()} px-5 fs-5`}>
-    {/* Check if the message is from 'chatgpt', if the animation is needed */}
-    {msg.sender.toLowerCase() === 'chatgpt' && msg._id === lastAiMessageId && isAnimating ? (
-      <TypeAnimation
-        sequence={[msg.content, () => { setIsAnimating(false); }]}
-        wrapper="span"
-        speed={75}
-        style={{ display: 'inline-block' }}
-        cursor={true}
-        repeat={0}
-      />
-    ) : (
-      // Check if the message is code
-      msg.isCode ? (
-        // Use CodeBlock component to display code with language and copy functionality
-        <CodeBlock language={msg.language} code={msg.content} />
+        {messages.map((msg, index) => {
+  const parts = splitMessageContent(msg.content);
+
+  return (
+    <div key={msg._id || index} className={`message ${msg.sender.toLowerCase()} px-5 fs-5`}>
+      {/* Check if the message is from 'chatgpt', if the animation is needed */}
+      {msg.sender.toLowerCase() === 'chatgpt' && msg._id === lastAiMessageId && isAnimating ? (
+        <TypeAnimation
+          sequence={[msg.content, () => { setIsAnimating(false); }]}
+          wrapper="span"
+          speed={75}
+          style={{ display: 'inline-block' }}
+          cursor={true}
+          repeat={0}
+        />
       ) : (
-        // Regular message content
-        msg.content
-      )
-    )}
-  </div>
-))}
+        parts.map((part, partIndex) => (
+          // Render code or text based on the part type
+          part.isCode ? (
+            <CodeMessageRenderer key={partIndex} content={part.content} />
+          ) : (
+            <span key={partIndex}>{part.content}</span>
+          )
+        ))
+      )}
+    </div>
+  );
+})}
+
           {/* Dummy div to ensure scroll to bottom */}
         <div ref={messagesEndRef} />
 
@@ -154,14 +172,17 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, a
   // Non-disabled Text Area (when logged in)
   <textarea
     className="form-control bg-transparent text-light"
+    id="user-input"
     rows="3"
     value={input}
+    data-testid="user-input"
     onChange={(e) => setInput(e.target.value)}
   />
 ) : (
   // Disabled Text Area (when not logged in)
   <textarea
     className="form-control bg-transparent text-light"
+    id="disabled-user-input"
     rows="3"
     disabled
   />
@@ -173,7 +194,7 @@ const Chatbox = ({ messages, input, setInput, sendMessage, regenerateResponse, a
               </svg>
             </button>
           ) : (token ? (
-            <button className="btn btn-secondary" onClick={submit}>
+            <button id="message-submit" className="btn btn-secondary" onClick={submit}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="32"
