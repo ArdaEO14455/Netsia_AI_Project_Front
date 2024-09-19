@@ -210,6 +210,10 @@
   border-radius: 5px;
 }
 
+.code-block-container {
+  padding-bottom: 1rem;
+}
+
 .message.user {
   text-align: left;
   background-color: #2f2f2f;
@@ -221,7 +225,7 @@
 
 .message.chatgpt {
   text-align: left;
-  width: 70%
+  width: 80%
 }
 
 .message.error {
@@ -292,7 +296,7 @@
 }
 
 .message.chatgpt {
-  width: 80%;
+  width: 90%;
   padding: 1rem !important;
   font-size: smaller !important;
 }

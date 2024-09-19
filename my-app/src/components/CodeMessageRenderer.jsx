@@ -1,7 +1,10 @@
 import React from 'react';
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { lucario } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { TypeAnimation } from 'react-type-animation';
+
 
 // Utility function to extract code language and code content from markdown
 const parseCodeContent = (content) => {
@@ -14,7 +17,7 @@ const CodeMessageRenderer = ({ content }) => {
   const { language, code } = parseCodeContent(content);
 
   return (
-    <div className="code-block-container position-relative p-3 border rounded bg-dark text-light">
+    <div className="code-block-container position-relative p-3 my-3 border rounded bg-dark text-light">
       {/* Language Label */}
       <div className="language-label position-absolute top-0 start-0 p-2 bg-primary text-white">
         {language}
@@ -31,7 +34,7 @@ const CodeMessageRenderer = ({ content }) => {
       </CopyToClipboard>
 
       {/* Code Block */}
-      <SyntaxHighlighter language={language} style={docco}>
+      <SyntaxHighlighter language={language} style={lucario}>
         {code}
       </SyntaxHighlighter>
     </div>
